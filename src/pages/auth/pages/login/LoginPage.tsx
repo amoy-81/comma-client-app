@@ -24,7 +24,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Box className=" flex justify-center items-center h-screen login-bg">
+    <Box className=" flex justify-center items-center h-screen loading-animation login-bg">
       <Container
         component="main"
         maxWidth="xs"

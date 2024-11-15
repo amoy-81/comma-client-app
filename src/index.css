@@ -7,3 +7,19 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+
+@keyframes pulseBackground {
+  0% {
+    background-color: #090f19;
+  }
+  50% {
+    background-color: #0e1828;
+  }
+  100% {
+    background-color: #090f19;
+  }
+}
+
+.loading-animation {
+  animation: pulseBackground 3s infinite ease-in-out;
+}
