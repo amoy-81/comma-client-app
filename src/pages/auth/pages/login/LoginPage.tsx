@@ -1,30 +1,26 @@
 import { Box, Button, Container, Typography } from "@mui/material";
-import useAuth from "../../../hooks/use-auth.hook";
-import TextInput from "../../../components/text-input/TextInput";
+import useAuth from "../../../../hooks/use-auth.hook";
+import TextInput from "../../../../components/text-input/TextInput";
 import { FormProvider, useForm } from "react-hook-form";
-import { LoginRequest } from "../../../api/auth/auth.type";
-import GoogleLogo from "../../../assets/svg/google-logo.svg";
+import { LoginRequest } from "../../../../api/auth/auth.type";
+import GoogleLogo from "../../../../assets/svg/google-logo.svg";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const { user, login, isLoading } = useAuth();
+  const navigate = useNavigate();
+  const { user, login, loginPending } = useAuth();
 
   const methods = useForm<LoginRequest>();
 
-  const {
-    handleSubmit,
-    formState: { errors },
-  } = methods;
+  const { handleSubmit } = methods;
 
-  console.log(user, isLoading, errors);
+  useEffect(() => {
+    if (user) navigate("/posts");
+  }, [user]);
 
   const handleLogin = (data: LoginRequest) => {
-    console.log(data);
-    // const data = {
-    //   email: "ali@mail.co",
-    //   password: "12345678",
-    // };
-
-    // login(data);
+    login(data);
   };
 
   return (
@@ -35,6 +31,7 @@ const LoginPage = () => {
         className="border-2 border-solid border-primary-600 rounded-3xl backdrop-blur-2xl bg-secondary-600/50 !shadow-lg !mx-4"
       >
         <Box className="sm:p-12 p-10 px-4 flex flex-col justify-center items-center gap-4">
+          {/* Title Section */}
           <Box className="w-full">
             <Typography className="!font-bold">Login</Typography>
             <Typography className="!text-xs text-secondary-500">
@@ -42,6 +39,7 @@ const LoginPage = () => {
             </Typography>
           </Box>
 
+          {/* Form Section */}
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(handleLogin)}>
               <TextInput
@@ -79,13 +77,15 @@ const LoginPage = () => {
                 </Typography>
               </Box>
 
+              {/* Action Button */}
               <Button
                 fullWidth
                 type="submit"
                 variant="contained"
                 className="!mt-2"
+                disabled={loginPending}
               >
-                LOGIN
+                {loginPending ? "Sending..." : "Login"}
               </Button>
               <Button
                 fullWidth
@@ -97,13 +97,17 @@ const LoginPage = () => {
             </form>
           </FormProvider>
         </Box>
+
         <Box className="flex items-center">
           <Box className="flex-1 bg-primary-600/40 h-px" />
           <Typography className="px-2">OR</Typography>
           <Box className="flex-1 bg-primary-600/40 h-px" />
         </Box>
 
-        <Typography className="!mt-2 !font-medium text-center">Dont have an accont?</Typography>
+        {/* Link Section */}
+        <Typography className="!mt-2 !font-medium text-center">
+          Dont have an accont?
+        </Typography>
         <Box className="sm:px-12 px-4 py-4 pb-6">
           <Button fullWidth className="" variant="outlined" color="inherit">
             Sign up

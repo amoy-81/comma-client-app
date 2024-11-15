@@ -22,6 +22,16 @@ const theme = createTheme({
         },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          "&.Mui-disabled": {
+            backgroundColor: "#737478",
+            color: "#ffffff",
+          },
+        },
+      },
+    },
   },
   typography: {
     fontFamily: "Poppins, sans-serif",

@@ -40,7 +40,7 @@ export const colors = {
 export const TextColor = {
   primary: "#fff",
   secondary: "#277EBC",
-  disabled: "#737478",
+  disabled: "#A2A2A4",
 };
 
 export const bgColor = {
