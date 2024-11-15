@@ -1,12 +1,12 @@
-import { Box, TextField, Typography } from "@mui/material";
+import { RouterProvider } from "react-router-dom";
+import router from "./router/router";
+import AppProvider from "./configs/app/app-provider.config";
 
 const App = () => {
   return (
-    <Box className="p-4">
-      <h1 className="text-red-500">Hello World</h1>
-      <Typography sx={{ color: "red" }}>Hello MUI</Typography>
-      <TextField label="Hiiii" variant="standard" />
-    </Box>
+    <AppProvider>
+      <RouterProvider router={router} />
+    </AppProvider>
   );
 };
 
