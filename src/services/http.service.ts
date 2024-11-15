@@ -1,7 +1,9 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import toast from "react-hot-toast";
+import { AppConfig } from "../configs/app/app.config";
 
-const baseURL = import.meta.env.SERVER_BASE_URL;
+const { baseURL } = AppConfig;
 
 const axiosInstance = axios.create({
   baseURL,
@@ -58,6 +60,18 @@ axiosInstance.interceptors.response.use(
         window.location.href = "/auth/login";
         return Promise.reject(refreshError);
       }
+    }
+
+    const { data } = error.response;
+
+    if (data?.message) {
+      if (Array.isArray(data.message)) {
+        data.message.forEach((msg: string) => toast.error(msg));
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      toast.error("An unexpected error occurred");
     }
 
     return Promise.reject(error);
