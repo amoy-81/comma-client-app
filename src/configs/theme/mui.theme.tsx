@@ -2,6 +2,27 @@ import { createTheme } from "@mui/material";
 import { bgColor, TextColor } from "./colors";
 
 const theme = createTheme({
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          fontSize: "14px",
+          "& .MuiInput-root": {
+            // Bottom border
+            "&:before": {
+              borderColor: "#FFF",
+              borderWidth: "0px 0px 2px 0px",
+            },
+          },
+          // Label
+          "& .MuiInputLabel-standard": {
+            fontSize: "14px",
+            color: "#fff",
+          },
+        },
+      },
+    },
+  },
   typography: {
     fontFamily: "Poppins, sans-serif",
   },
