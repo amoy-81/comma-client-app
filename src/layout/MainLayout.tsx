@@ -5,9 +5,9 @@ export default function MainLayout() {
   return (
     <div className="">
       {/* <ScrollToTop /> */}
-      <div className=" h-16" />
+      {/* <div className=" h-16" /> */}
       <Outlet />
-      <div className=" h-10" />
+      {/* <div className=" h-10" /> */}
     </div>
   );
 }

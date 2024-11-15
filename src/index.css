@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.login-bg {
+  background-image: url("./assets/image/login-bg.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
