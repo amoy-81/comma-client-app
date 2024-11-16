@@ -1,13 +1,4 @@
-export type User = {
-  id: number;
-  name: string;
-  email: string;
-  avatar: string;
-  role: string; // TODO: Change to enum
-  bio: string;
-  created_at: string;
-  updated_at: string;
-};
+import { User } from "../user/user.type";
 
 export type LoginRequest = {
   email: string;
