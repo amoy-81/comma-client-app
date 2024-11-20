@@ -1,4 +1,4 @@
-import { User } from "../../api/auth/auth.type";
+import { User } from "../../api/user/user.type";
 
 export type AuthState = {
   user: User | null;
