@@ -1,9 +1,10 @@
 import Cookies from "js-cookie";
 import { useAuthLogin } from "../api/auth/auth.querys";
-import { LoginRequest, User } from "../api/auth/auth.type";
+import { LoginRequest } from "../api/auth/auth.type";
 import useAuthStore from "../store/auth/auth.store";
 import axiosInstance from "../services/http.service";
 import { useState } from "react";
+import { User } from "../api/user/user.type";
 
 const useAuth = () => {
   const { user, setUser, logout } = useAuthStore();
