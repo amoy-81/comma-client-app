@@ -1,4 +1,4 @@
-import { Pagination } from "../../@types/pagination.type";
+import { Pagination } from "../@types/pagination.type";
 import { User } from "../user/user.type";
 
 export type Post = {
@@ -40,7 +40,9 @@ export type ToggleLikeResponse = {
   op: "LIKE" | "DISLIKE";
 };
 
-export type GetPostLikers = {
+export type GetLikersParams = Pagination & { postId: number };
+
+export type GetPostLikersResponse = {
   post_id: string;
   total: number;
   page: string;

@@ -1,21 +1,19 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import useUserAction from "./user.actions";
 import { UserKeys } from "./user.keys";
 import { SearchUserParams, UpdateProfileRequest } from "./user.type";
 
-export const useGetUser = () => {
+export const useGetUser = (userId: number) => {
   const { getUserById } = useUserAction();
 
-  const { mutate, isPending, isSuccess, data } = useMutation({
-    mutationKey: [UserKeys.getUserById],
-    mutationFn: (userId: number) => getUserById(userId),
+  const { data, isLoading } = useQuery({
+    queryKey: [UserKeys.getUserById, userId],
+    queryFn: () => getUserById(userId),
   });
 
   return {
     getUserData: data,
-    getUserMutate: mutate,
-    getUserIsPending: isPending,
-    getUserIsSuccess: isSuccess,
+    getUserLoading: isLoading,
   };
 };
 

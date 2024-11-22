@@ -3,25 +3,19 @@ import { generateQueryParams } from "../../utils/generate-query-params.util";
 import {
   CreatePostRequest,
   CreatePostResponse,
+  GetLikersParams,
   GetOnePostResponse,
+  GetPostLikersResponse,
   GetPostsParams,
   GetPostsResponse,
   GetRandomPostsParams,
   GetRandomPostsResponse,
+  ToggleLikeResponse,
 } from "./post.type";
 import { PostUrls } from "./post.urls";
-// import {
-//   FollowResponse,
-//   GetUserByIdResponse,
-//   SearchUserParams,
-//   SearchUserResponse,
-//   UnfollowResponse,
-//   UpdateProfileRequest,
-// } from "./post.type";
-// import { UserUrls } from "./post.urls";
 
-const useUserAction = () => {
-  const createPost = async (
+const usePostAction = () => {
+  const createPostAction = async (
     data: CreatePostRequest
   ): Promise<CreatePostResponse> => {
     const response = await axiosInstance
@@ -34,7 +28,7 @@ const useUserAction = () => {
     return response;
   };
 
-  const getPosts = async (
+  const getPostsUserAction = async (
     params: GetPostsParams
   ): Promise<GetPostsResponse> => {
     const queryParams = generateQueryParams(params);
@@ -49,7 +43,7 @@ const useUserAction = () => {
     return response;
   };
 
-  const getRandomPosts = async (
+  const getRandomPostsAction = async (
     params: GetRandomPostsParams
   ): Promise<GetRandomPostsResponse> => {
     const queryParams = generateQueryParams(params);
@@ -66,70 +60,67 @@ const useUserAction = () => {
     return response;
   };
 
-  // const getOnePosts = async (id: number): Promise<GetOnePostResponse> => {
-  //   const response = await axiosInstance
-  //     .get(PostUrls.)
-  //     .then((res) => res.data)
-  //     .catch((err) => err);
+  const getOnePostsAction = async (
+    postId: number
+  ): Promise<GetOnePostResponse> => {
+    const response = await axiosInstance
+      .get(`${PostUrls.general}/${postId}`)
+      .then((res) => res.data)
+      .catch((err) => err);
 
-  //   return response;
-  // };
+    return response;
+  };
 
-  // const followUser = async (userId: number): Promise<FollowResponse> => {
-  //   const response = await axiosInstance
-  //     .put(`${UserUrls.follow}/${userId}`)
-  //     .then((res) => res.data)
-  //     .catch((err) => err);
+  const toggleLikeAction = async (
+    postId: number
+  ): Promise<ToggleLikeResponse> => {
+    const response = await axiosInstance
+      .put(`${PostUrls.toggleLike}/${postId}`)
+      .then((res) => res.data)
+      .catch((err) => err);
 
-  //   return response;
-  // };
+    return response;
+  };
 
-  // const unfollowUser = async (userId: number): Promise<UnfollowResponse> => {
-  //   const response = await axiosInstance
-  //     .put(`${UserUrls.unfollow}/${userId}`)
-  //     .then((res) => res.data)
-  //     .catch((err) => err);
+  const getPostLikersAction = async (
+    params: GetLikersParams
+  ): Promise<GetPostLikersResponse> => {
+    const { postId, ...paginationParams } = params;
 
-  //   return response;
-  // };
+    const queryParams = generateQueryParams(paginationParams);
 
-  // const searchInUsers = async (
-  //   params: SearchUserParams
-  // ): Promise<SearchUserResponse> => {
-  //   const { name, page, limit } = params;
+    const url = `${PostUrls.likers}/${postId}${
+      queryParams ? `?${queryParams}` : ""
+    }`;
 
-  //   const response = await axiosInstance
-  //     .get(`${UserUrls.search}?name=${name}&page=${page}&limit=${limit}`)
-  //     .then((res) => res.data)
-  //     .catch((err) => err);
+    const response = await axiosInstance
+      .get(url)
+      .then((res) => res.data)
+      .catch((err) => err);
 
-  //   return response;
-  // };
+    return response;
+  };
 
-  // const updateUserInfo = async (
-  //   body: UpdateProfileRequest
-  // ): Promise<SearchUserResponse> => {
-  //   const { userId, ...data } = body;
+  const deletePostAction = async (
+    postId: number
+  ): Promise<ToggleLikeResponse> => {
+    const response = await axiosInstance
+      .delete(`${PostUrls.general}/${postId}`)
+      .then((res) => res.data)
+      .catch((err) => err);
 
-  //   const response = await axiosInstance
-  //     .put(`${UserUrls.updateProfile}/${userId}`, data, {
-  //       headers: { "Content-Type": "multipart/form-data" },
-  //     })
-  //     .then((res) => res.data)
-  //     .catch((err) => err);
-
-  //   return response;
-  // };
+    return response;
+  };
 
   return {
-    // getUserById,
-    // followUser,
-    // unfollowUser,
-    // searchInUsers,
-    getRandomPosts,
-    getPosts,
-    createPost,
+    createPostAction,
+    getPostsUserAction,
+    getRandomPostsAction,
+    getOnePostsAction,
+    toggleLikeAction,
+    getPostLikersAction,
+    deletePostAction,
   };
 };
 
-export default useUserAction;
+export default usePostAction;

@@ -1,84 +1,113 @@
-import { useMutation } from "@tanstack/react-query";
-import useUserAction from "./post.actions";
-import { UserKeys } from "./post.keys";
-import { SearchUserParams, UpdateProfileRequest } from "./post.type";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { PostKeys } from "./post.keys";
+import usePostAction from "./post.actions";
+import {
+  CreatePostRequest,
+  GetLikersParams,
+  GetPostsParams,
+  GetRandomPostsParams,
+} from "./post.type";
 
-export const useGetUser = () => {
-  const { getUserById } = useUserAction();
+export const useCreatePost = () => {
+  const { createPostAction } = usePostAction();
 
   const { mutate, isPending, isSuccess, data } = useMutation({
-    mutationKey: [UserKeys.getUserById],
-    mutationFn: (userId: number) => getUserById(userId),
+    mutationKey: [PostKeys.create],
+    mutationFn: (data: CreatePostRequest) => createPostAction(data),
   });
 
   return {
-    getUserData: data,
-    getUserMutate: mutate,
-    getUserIsPending: isPending,
-    getUserIsSuccess: isSuccess,
+    createPostData: data,
+    createPostMutate: mutate,
+    createPostIsPending: isPending,
+    createPostIsSuccess: isSuccess,
   };
 };
 
-export const useFollowUser = () => {
-  const { followUser } = useUserAction();
+export const useUserGetPosts = (params: GetPostsParams) => {
+  const { getPostsUserAction } = usePostAction();
 
-  const { mutate, isPending, isSuccess, data } = useMutation({
-    mutationKey: [UserKeys.follow],
-    mutationFn: (userId: number) => followUser(userId),
+  const { data, isLoading } = useQuery({
+    queryKey: [PostKeys.getPosts, params.page, params.userId, params.limit],
+    queryFn: () => getPostsUserAction(params),
   });
 
   return {
-    followData: data,
-    followMutate: mutate,
-    followIsPending: isPending,
-    followIsSuccess: isSuccess,
+    getPostsData: data,
+    getPostsLoading: isLoading,
   };
 };
 
-export const useUnfollowUser = () => {
-  const { unfollowUser } = useUserAction();
+export const useGetRandomPosts = (params: GetRandomPostsParams) => {
+  const { getRandomPostsAction } = usePostAction();
 
-  const { mutate, isPending, isSuccess, data } = useMutation({
-    mutationKey: [UserKeys.unfollow],
-    mutationFn: (userId: number) => unfollowUser(userId),
+  const { data, isLoading } = useQuery({
+    queryKey: [PostKeys.getRandomPosts, params.page, params.limit],
+    queryFn: () => getRandomPostsAction(params),
   });
 
   return {
-    unfollowData: data,
-    unfollowMutate: mutate,
-    unfollowIsPending: isPending,
-    unfollowIsSuccess: isSuccess,
+    getRandomPostsData: data,
+    getRandomPostsLoading: isLoading,
   };
 };
 
-export const useSearchUser = () => {
-  const { searchInUsers } = useUserAction();
+export const useGetOnePosts = (postId: number) => {
+  const { getOnePostsAction } = usePostAction();
 
-  const { mutate, isPending, isSuccess, data } = useMutation({
-    mutationKey: [UserKeys.search],
-    mutationFn: (params: SearchUserParams) => searchInUsers(params),
+  const { data, isLoading } = useQuery({
+    queryKey: [PostKeys.getPost, postId],
+    queryFn: () => getOnePostsAction(postId),
   });
 
   return {
-    searchUserData: data,
-    searchUserMutate: mutate,
-    searchUserIsPending: isPending,
-    searchUserIsSuccess: isSuccess,
+    getOnePostsData: data,
+    getOnePostsLoading: isLoading,
   };
 };
 
-export const useUpdateProfile = () => {
-  const { updateUserInfo } = useUserAction();
+export const useToggleLikePost = () => {
+  const { toggleLikeAction } = usePostAction();
 
   const { mutate, isPending, isSuccess, data } = useMutation({
-    mutationKey: [UserKeys.updateProfile],
-    mutationFn: (params: UpdateProfileRequest) => updateUserInfo(params),
+    mutationKey: [PostKeys.toggleLike],
+    mutationFn: (postId: number) => toggleLikeAction(postId),
   });
 
   return {
-    updateProfileData: data,
-    updateProfileMutate: mutate,
-    updateProfileIsPending: isPending,
-    updateProfileIsSuccess: isSuccess,
+    toggleLikePostData: data,
+    toggleLikePostMutate: mutate,
+    toggleLikePostIsPending: isPending,
+    toggleLikePostIsSuccess: isSuccess,
+  };
+};
+
+export const useGetPostLikers = (params: GetLikersParams) => {
+  const { getPostLikersAction } = usePostAction();
+
+  const { data, isLoading } = useQuery({
+    queryKey: [PostKeys.likers, params.page, params.limit, params.postId],
+    queryFn: () => getPostLikersAction(params),
+  });
+
+  return {
+    getOnePostsData: data,
+    getOnePostsLoading: isLoading,
+  };
+};
+
+export const useDeletePost = () => {
+  const { deletePostAction } = usePostAction();
+
+  const { mutate, isPending, isSuccess, data } = useMutation({
+    mutationKey: [PostKeys.deletePost],
+    mutationFn: (postId: number) => deletePostAction(postId),
+  });
+
+  return {
+    deletePostData: data,
+    deletePostMutate: mutate,
+    deletePostIsPending: isPending,
+    deletePostIsSuccess: isSuccess,
   };
 };

@@ -1,4 +1,4 @@
-export const UserKeys = {
+export const PostKeys = {
   getPosts: "post-get",
   getPost: "post-get-one",
   deletePost: "post-delete",
