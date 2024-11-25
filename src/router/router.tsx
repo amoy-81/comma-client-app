@@ -1,9 +1,10 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import MainLayout from "../layout/MainLayout";
+import MainLayout from "../layout/main-layout/MainLayout";
 import HomePage from "../pages/home/HomePage";
 import LoginPage from "../pages/auth/pages/login/LoginPage";
 import PostsPage from "../pages/posts/PostsPage";
 import AuthProvider from "../pages/auth/providers/auth.provider";
+import AuthLayout from "../layout/auth-layout/AuthLayout";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
     path: "/auth",
     element: (
       <AuthProvider mode="auth">
-        <MainLayout />
+        <AuthLayout />
       </AuthProvider>
     ),
     children: [
