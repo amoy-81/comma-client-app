@@ -9,7 +9,7 @@ import { Box } from "@mui/material";
 
 const Navbar = () => {
   return (
-    <Box className="w-full sticky bottom-4 flex justify-center items-center">
+    <Box className="w-full fixed left-0 bottom-4 flex justify-center items-center">
       <Box className="w-80 h-11 p-2 px-4 bg-secondary-600/50 backdrop-blur-sm border border-solid text-primary-700 border-primary-700 rounded-3xl flex items-center justify-between gap-1">
         <Newspaper />
         <SupervisorAccount />

@@ -5,6 +5,8 @@ import LoginPage from "../pages/auth/pages/login/LoginPage";
 import PostsPage from "../pages/posts/PostsPage";
 import AuthProvider from "../pages/auth/providers/auth.provider";
 import AuthLayout from "../layout/auth-layout/AuthLayout";
+import ProfilePage from "../pages/profile/ProfilePage";
+import SearchPage from "../pages/search/SearchPage";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,8 @@ const router = createBrowserRouter([
     children: [
       { path: "home", element: <HomePage /> },
       { path: "posts", element: <PostsPage /> },
+      { path: "profile", element: <ProfilePage /> },
+      { path: "search", element: <SearchPage /> },
     ],
   },
   {
