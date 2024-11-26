@@ -30,7 +30,7 @@ const DesktopHeader = () => {
   });
 
   return (
-    <Box className="sticky hidden bg-secondary-900/50 top-0 w-full h-12 px-4 md:flex items-center border-b border-solid border-secondary-800 backdrop-blur-sm rounded-t-3xl">
+    <Box className="sticky z-40 hidden bg-secondary-900/50 top-0 w-full h-12 px-4 md:flex items-center border-b border-solid border-secondary-800 backdrop-blur-sm rounded-t-3xl">
       <Breadcrumbs
         separator={<NavigateNextIcon fontSize="small" />}
         className="!text-sm "
