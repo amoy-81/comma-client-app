@@ -1,6 +1,11 @@
 import { createTheme } from "@mui/material";
 import { bgColor, TextColor } from "./colors";
 
+export const fonts = {
+  en: "Poppins, sans-serif",
+  fa: "IRANSans, Vazir, Tahoma, sans-serif",
+};
+
 const theme = createTheme({
   components: {
     MuiTextField: {
