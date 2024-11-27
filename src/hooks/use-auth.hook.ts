@@ -25,6 +25,7 @@ const useAuth = () => {
         Cookies.set("refreshToken", refreshToken, {
           secure: true,
           httpOnly: false,
+          expires: 7,
         });
 
         setUser(user);

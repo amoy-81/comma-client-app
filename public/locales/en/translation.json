@@ -1,0 +1,16 @@
+{
+  "posts": "POSTS",
+  "followers": "FOLLOWERS",
+  "followed": "FOLLOWED",
+  "follow": "Follow",
+  "pleaseWait": "Please Wait",
+  "joinedAt": "Joined at",
+  "comma": "COMMA",
+  "commaDiscription": "A platform to present ideas",
+  "home": "Home",
+  "profile": "Profile",
+  "search": "Search",
+  "userSearchNoResult": "User Search No Result",
+  "viewMore": "View More",
+  "searchAmongUsers": "Search among users..."
+}

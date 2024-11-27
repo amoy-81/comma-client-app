@@ -5,7 +5,7 @@ export type User = {
   name: string;
   email: string;
   avatar: string;
-  role: string; // TODO: Change to enum
+  role: UserRoles;
   bio: string;
   created_at: string;
   updated_at: string;
@@ -38,3 +38,10 @@ export type UpdateProfileRequest = {
   bio?: string;
   avatar?: File;
 };
+
+export enum UserRoles {
+  NORMAL_USER = "NORMAL_USER",
+  GOLD_USER = "GOLD_USER",
+  VERIFYED_USER = "VERIFYED_USER",
+  SUPER_USER = "SUPER_USER",
+}
