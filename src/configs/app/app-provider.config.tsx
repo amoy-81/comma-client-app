@@ -1,5 +1,5 @@
-import { Button, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import { FC, ReactNode, useEffect } from "react";
+import { Button, CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { FC, ReactNode, useEffect, useMemo } from "react";
 import theme, { fonts } from "../theme/mui.theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
@@ -15,30 +15,34 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
 
   const queryClient = new QueryClient();
 
-  const muiTheme = createTheme({
-    ...theme,
-    typography: {
-      fontFamily: fonts[lang],
-    },
-  });
+  const direction = lang === "fa" ? "rtl" : "ltr";
+
+  const muiTheme = useMemo(
+    () =>
+      createTheme({
+        ...theme,
+        typography: {
+          fontFamily: fonts[lang],
+        },
+        direction,
+      }),
+    [lang]
+  );
 
   useEffect(() => {
     i18n.changeLanguage(lang);
-  }, [lang]);
+    document.documentElement.dir = direction;
+  }, [lang, i18n, direction]);
 
   return (
-    <>
-      <ThemeProvider theme={muiTheme}>
-        <CssBaseline />
-        <Toaster />
-        <QueryClientProvider client={queryClient}>
-          <Button onClick={() => setLang(lang === "en" ? "fa" : "en")}>
-            aa
-          </Button>
-          {children}
-        </QueryClientProvider>
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={muiTheme}>
+      <CssBaseline />
+      <Toaster />
+      <QueryClientProvider client={queryClient}>
+        <Button onClick={() => setLang(lang === "en" ? "fa" : "en")}>t</Button>
+        {children}
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 };
 

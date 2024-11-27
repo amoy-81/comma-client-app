@@ -6,5 +6,11 @@
   "pleaseWait": "Please Wait",
   "joinedAt": "Joined at",
   "comma": "COMMA",
-  "commaDiscription": "A platform to present ideas"
+  "commaDiscription": "A platform to present ideas",
+  "home": "Home",
+  "profile": "Profile",
+  "search": "Search",
+  "userSearchNoResult": "User Search No Result",
+  "viewMore": "View More",
+  "searchAmongUsers": "Search among users..."
 }

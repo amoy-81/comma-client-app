@@ -7,8 +7,10 @@ import UserRow from "../../../../../components/user-row/UserRow";
 import UserRowSkeleton from "../../../../../components/user-row/UserRowSkeleton";
 import { useNavigate } from "react-router-dom";
 import { SearchPageMode } from "../../../../../@types/general.type";
+import { useTranslation } from "react-i18next";
 
 const ShortSearchUser = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [searchValue, setSearchValue] = useState("");
@@ -50,7 +52,7 @@ const ShortSearchUser = () => {
           onChange={(e) => handleChange(e.target.value)}
           value={searchValue}
           disableUnderline
-          placeholder="Search among users..."
+          placeholder={t("searchAmongUsers")}
         />
       </Box>
 
@@ -64,7 +66,7 @@ const ShortSearchUser = () => {
 
         {searchUserData?.length === 0 && (
           <Typography className="!text-sm text-primary-900 !mt-4">
-            User Search No Result
+            {t("userSearchNoResult")}
           </Typography>
         )}
 
@@ -73,7 +75,7 @@ const ShortSearchUser = () => {
             onClick={handleViewMoreClick}
             className="!text-sm text-primary-600 !font-medium cursor-pointer"
           >
-            View More
+            {t("viewMore")}
           </Typography>
         </Box>
       </Box>

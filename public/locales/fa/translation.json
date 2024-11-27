@@ -1,10 +1,16 @@
 {
-  "posts": "پست",
-  "followers": "دنبال کنندگان",
-  "followed": "دنبال شده ها",
+  "posts": "پست‌ها",
+  "followers": "دنبال‌کنندگان",
+  "followed": "دنبال‌شده‌ها",
   "follow": "دنبال کردن",
-  "pleaseWait": "لطفا منتظر بمانید",
+  "pleaseWait": "لطفاً منتظر بمانید",
   "joinedAt": "پیوسته در",
   "comma": "کاما",
-  "commaDiscription": "یک پلتفرم برای ارائه ایده ها"
+  "commaDiscription": "پلتفرمی برای ارائه ایده‌ها",
+  "home": "خانه",
+  "profile": "پروفایل",
+  "search": "جستجو",
+  "userSearchNoResult": "نتیجه‌ای برای جستجوی کاربر یافت نشد",
+  "viewMore": "مشاهده بیشتر",
+  "searchAmongUsers": "جستجو در بین کاربران..."
 }

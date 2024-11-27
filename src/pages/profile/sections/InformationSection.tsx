@@ -23,9 +23,9 @@ const InformationSection = () => {
     getUserData?.user || {};
 
   const userInfoDetails = [
-    { count: 6, label: t("posts") },
-    { count: 6, label: t("followers") },
-    { count: 6, label: t("followed") },
+    { count: 0, label: t("posts") },
+    { count: 0, label: t("followers") },
+    { count: 0, label: t("followed") },
   ];
 
   return (

@@ -4,6 +4,7 @@ import { UserRowProps } from "./@types/user-row.type";
 import { useNavigate } from "react-router-dom";
 import { UserRoles } from "../../api/user/user.type";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import { t } from "i18next";
 
 const UserRow: FC<UserRowProps> = ({ id, name, avatar, role }) => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const UserRow: FC<UserRowProps> = ({ id, name, avatar, role }) => {
       </Box>
 
       <Button variant="contained" className="!h-8 !text-xs " size="small">
-        Follow
+        {t("follow")}
       </Button>
     </Box>
   );
