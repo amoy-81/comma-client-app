@@ -6,8 +6,20 @@ import { Toaster } from "react-hot-toast";
 import "./i18n";
 import { useTranslation } from "react-i18next";
 import useLanguageStore from "../../store/lang/lang.store";
+import rtlPlugin from "stylis-plugin-rtl";
+import createCache from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
 
 type AppProviderProps = { children: ReactNode };
+
+const rtlCache = createCache({
+  key: "muirtl",
+  stylisPlugins: [rtlPlugin],
+});
+
+const ltrCache = createCache({
+  key: "mui",
+});
 
 const AppProvider: FC<AppProviderProps> = ({ children }) => {
   const { lang, setLang } = useLanguageStore();
@@ -35,14 +47,18 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
   }, [lang, i18n, direction]);
 
   return (
-    <ThemeProvider theme={muiTheme}>
-      <CssBaseline />
-      <Toaster />
-      <QueryClientProvider client={queryClient}>
-        <Button onClick={() => setLang(lang === "en" ? "fa" : "en")}>t</Button>
-        {children}
-      </QueryClientProvider>
-    </ThemeProvider>
+    <CacheProvider value={lang === "fa" ? rtlCache : ltrCache}>
+      <ThemeProvider theme={muiTheme}>
+        <CssBaseline />
+        <Toaster />
+        <QueryClientProvider client={queryClient}>
+          <Button onClick={() => setLang(lang === "en" ? "fa" : "en")}>
+            t
+          </Button>
+          {children}
+        </QueryClientProvider>
+      </ThemeProvider>
+    </CacheProvider>
   );
 };
 

@@ -6,6 +6,7 @@ import { LoginRequest } from "../../../../api/auth/auth.type";
 import GoogleLogo from "../../../../assets/svg/google-logo.svg";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { t } from "i18next";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -33,9 +34,9 @@ const LoginPage = () => {
         <Box className="sm:p-12 p-10 px-4 flex flex-col justify-center items-center gap-4">
           {/* Title Section */}
           <Box className="w-full">
-            <Typography className="!font-bold">Login</Typography>
+            <Typography className="!font-bold">{t("login")}</Typography>
             <Typography className="!text-xs text-secondary-500">
-              Comma is a place to express opinions
+              {t("loginDesc")}
             </Typography>
           </Box>
 
@@ -45,27 +46,27 @@ const LoginPage = () => {
               <TextInput
                 fullWidth
                 name="email"
-                label="Email"
+                label={t("email")}
                 rules={{
-                  required: "Email is required",
+                  required: t("emailIsRequired"),
                   pattern: {
                     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: "Invalid email format",
+                    message: t("emailError"),
                   },
                 }}
-                placeholder="Enter your email..."
+                placeholder={t("Enter your email...")}
               />
 
               <TextInput
                 fullWidth
                 name="password"
                 type="password"
-                label="Password"
+                label={t("Password")}
                 rules={{
-                  required: "Password is required",
+                  required: t("Password is required"),
                   minLength: {
                     value: 8,
-                    message: "Password must be at least 8 characters",
+                    message: t("Password must be at least 8 characters"),
                   },
                 }}
                 placeholder="********"
@@ -73,7 +74,7 @@ const LoginPage = () => {
 
               <Box className="py-4">
                 <Typography className="w-full text-right text-primary-600 !text-sm">
-                  Forgot password?
+                  {t("Forgot password?")}
                 </Typography>
               </Box>
 
@@ -85,14 +86,14 @@ const LoginPage = () => {
                 className="!mt-2"
                 disabled={loginPending}
               >
-                {loginPending ? "Sending..." : "Login"}
+                {loginPending ? t("Sending...") : t("login")}
               </Button>
               <Button
                 fullWidth
                 className="!bg-white !text-black !mt-2 flex gap-2"
               >
                 <img src={GoogleLogo} alt="google logo" />
-                LOGIN With Google
+                {t("LOGIN With Google")}
               </Button>
             </form>
           </FormProvider>
@@ -100,17 +101,17 @@ const LoginPage = () => {
 
         <Box className="flex items-center">
           <Box className="flex-1 bg-primary-600/40 h-px" />
-          <Typography className="px-2">OR</Typography>
+          <Typography className="px-2">{t("OR")}</Typography>
           <Box className="flex-1 bg-primary-600/40 h-px" />
         </Box>
 
         {/* Link Section */}
         <Typography className="!mt-2 !font-medium text-center">
-          Dont have an accont?
+          {t("Dont have an accont?")}
         </Typography>
         <Box className="sm:px-12 px-4 py-4 pb-6">
           <Button fullWidth className="" variant="outlined" color="inherit">
-            Sign up
+            {t("Sign up")}
           </Button>
         </Box>
       </Container>

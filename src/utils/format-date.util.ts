@@ -1,19 +1,21 @@
+import { t } from "i18next";
+
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
 
   const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    t("january"),
+    t("february"),
+    t("march"),
+    t("april"),
+    t("may"),
+    t("june"),
+    t("july"),
+    t("august"),
+    t("september"),
+    t("october"),
+    t("november"),
+    t("december"),
   ];
 
   const month = monthNames[date.getUTCMonth()];
