@@ -23,3 +23,26 @@
 .loading-animation {
   animation: pulseBackground 3s infinite ease-in-out;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #0e18289a #ffffff00;
+}
