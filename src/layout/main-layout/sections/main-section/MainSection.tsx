@@ -9,7 +9,9 @@ const MainSection = () => {
     <Box className="md:bg-secondary-900 md:border border-solid border-secondary-800 xl:col-span-6 md:col-span-8 col-span-12 rounded-3xl">
       <DesktopHeader />
       <MobileHeader />
-      <Outlet />
+      <Box className="p-4">
+        <Outlet />
+      </Box>
       <Navbar />
     </Box>
   );

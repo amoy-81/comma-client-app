@@ -17,7 +17,7 @@ const router = createBrowserRouter([
       </AuthProvider>
     ),
     children: [
-      { path: "home", element: <HomePage /> },
+      { path: "", element: <HomePage /> },
       { path: "posts", element: <PostsPage /> },
       { path: "profile", element: <ProfilePage /> },
       { path: "search", element: <SearchPage /> },

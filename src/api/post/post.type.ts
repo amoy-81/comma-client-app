@@ -14,7 +14,7 @@ export type Post = {
 
 export type CreatePostRequest = {
   text_content: string;
-  image_content: File;
+  image_content?: File | null;
 };
 
 export type CreatePostResponse = {

@@ -7,13 +7,18 @@ import {
   GetPostsParams,
   GetRandomPostsParams,
 } from "./post.type";
+import { useState } from "react";
 
 export const useCreatePost = () => {
   const { createPostAction } = usePostAction();
+  const [progress, setProgress] = useState<number>(0);
 
   const { mutate, isPending, isSuccess, data } = useMutation({
     mutationKey: [PostKeys.create],
-    mutationFn: (data: CreatePostRequest) => createPostAction(data),
+    mutationFn: (data: CreatePostRequest) =>
+      createPostAction(data, (progressLoaded) => {
+        setProgress(progressLoaded);
+      }),
   });
 
   return {
@@ -21,6 +26,7 @@ export const useCreatePost = () => {
     createPostMutate: mutate,
     createPostIsPending: isPending,
     createPostIsSuccess: isSuccess,
+    createPostProgress: progress,
   };
 };
 
