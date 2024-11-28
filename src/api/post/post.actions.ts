@@ -1,3 +1,4 @@
+import { AxiosProgressEvent } from "axios";
 import axiosInstance from "../../services/http.service";
 import { generateQueryParams } from "../../utils/generate-query-params.util";
 import {
@@ -16,11 +17,20 @@ import { PostUrls } from "./post.urls";
 
 const usePostAction = () => {
   const createPostAction = async (
-    data: CreatePostRequest
+    data: CreatePostRequest,
+    onProgress?: (progress: number) => void
   ): Promise<CreatePostResponse> => {
     const response = await axiosInstance
       .post(PostUrls.create, data, {
         headers: { "Content-Type": "multipart/form-data" },
+        onUploadProgress: (progressEvent: AxiosProgressEvent) => {
+          onProgress &&
+            onProgress(
+              Math.round(
+                (progressEvent.loaded / (progressEvent.total || 1)) * 100
+              )
+            );
+        },
       })
       .then((res) => res.data)
       .catch((err) => err);

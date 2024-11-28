@@ -42,7 +42,7 @@ const SearchPage = () => {
   };
 
   return (
-    <Box className="p-4 flex flex-col gap-y-4">
+    <Box className="md:p-4 p-2 flex flex-col gap-y-4">
       {/* Search Box */}
       <Box className="w-full h-10 p-2 pl-3 bg-tertiary-600 border border-solid border-secondary-800 rounded-3xl flex items-center gap-1">
         {searchUserIsPending ? (
@@ -68,12 +68,12 @@ const SearchPage = () => {
       />
 
       {/* Content Section */}
-      <Box className="w-full py-2 px-4 rounded-3xl flex flex-col items-center gap-4 overflow-hidden">
+      <Box className="w-full py-2 md:px-4 px-2 rounded-3xl flex flex-col items-center gap-4 overflow-hidden">
         <TabContentWithAnimation activeKey={activeTab}>
           {activeTab === "posts" ? (
             <Typography>{t("No posts to show.")}</Typography>
           ) : (
-            <Box className="w-full py-2 px-4 rounded-3xl flex flex-col items-center gap-4">
+            <Box className="w-full py-2 rounded-3xl flex flex-col items-center gap-4">
               {searchUserIsPending &&
                 [1, 2, 3, 4].map((item) => <UserRowSkeleton key={item} />)}
 
