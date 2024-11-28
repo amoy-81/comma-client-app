@@ -5,15 +5,17 @@ import { useTranslation } from "react-i18next";
 import useLanguageStore from "../../../store/lang/lang.store";
 import { mergeClasses } from "../../../utils/merge-classess.util";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../../hooks/use-auth.hook";
 
 const MobileHeader = () => {
   const { t } = useTranslation();
   const { lang } = useLanguageStore();
+  const { user } = useAuth();
 
   const navigate = useNavigate();
 
   return (
-    <Box className="sticky top-4 w-full h-10 p-2 pl-3 bg-secondary-900 border border-solid border-secondary-800 rounded-3xl hidden max-md:flex items-center justify-between gap-1">
+    <Box className="sticky top-4 w-full z-40 h-10 p-2 pl-3 bg-secondary-900 border border-solid border-secondary-800 rounded-3xl hidden max-md:flex items-center justify-between gap-1">
       <Box onClick={() => navigate(-1)}>
         <ArrowBack
           className={mergeClasses(
@@ -29,7 +31,10 @@ const MobileHeader = () => {
         </Typography>
       </Box>
       <Box className="">
-        <Avatar className="!size-8 !text-primary-600 !bg-secondary-600" />
+        <Avatar
+          src={user?.avatar}
+          className="!size-8 !text-primary-600 !bg-secondary-600"
+        />
       </Box>
     </Box>
   );

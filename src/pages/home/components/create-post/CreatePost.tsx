@@ -44,7 +44,10 @@ const CreatePost = () => {
         <Box className="lg:col-span-10 col-span-12">
           <Box className="flex">
             <Box className="p-2">
-              <Avatar className="!size-10" src={avatar} />
+              <Avatar
+                className="!size-10 !text-primary-600 !bg-secondary-600"
+                src={avatar}
+              />
             </Box>
             <Box className="w-full">
               <TextField
@@ -137,7 +140,10 @@ const CreatePost = () => {
         )}
       </Box>
 
-      <Box component={"hr"} className="mx-4 border-white/25 mt-4" />
+      <Box
+        component={"hr"}
+        className="mx-4 border-white/25 mt-4 md:block hidden"
+      />
     </>
   );
 };
