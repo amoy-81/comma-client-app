@@ -54,3 +54,7 @@ export type DeletePostResponse = {
   message: string;
   op: "DELETE";
 };
+
+export type SearchPostsParams = Pagination & { text: string };
+
+export type SearchPostsResponse = Post[];

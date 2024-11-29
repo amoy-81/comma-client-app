@@ -1,4 +1,7 @@
-import { Pagination } from "../@types/pagination.type";
+type Pagination = {
+  page?: number;
+  limit?: number;
+};
 
 export type User = {
   id: number;

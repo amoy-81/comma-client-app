@@ -44,5 +44,10 @@
   "users": "کاربران",
   "post": "پست",
   "What is happening ?": "چه اتفاقی می افتد ؟",
-  "send": "ارسال..."
+  "send": "ارسال...",
+  "searchValueEmpty": "چیزی را برای جستجو وارد کنید",
+  "searchAmongPosts": "جستوجو در میان پست ها...",
+  "searchPlaceholder": "جستوجو در میان اطلاعات...",
+  "newspaper": "روزنامه",
+  "board": "دیوار"
 }

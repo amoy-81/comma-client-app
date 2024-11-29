@@ -53,7 +53,7 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
         <Toaster />
         <QueryClientProvider client={queryClient}>
           <Button onClick={() => setLang(lang === "en" ? "fa" : "en")}>
-            t
+            change lang
           </Button>
           {children}
         </QueryClientProvider>

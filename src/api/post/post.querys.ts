@@ -6,6 +6,7 @@ import {
   GetLikersParams,
   GetPostsParams,
   GetRandomPostsParams,
+  SearchPostsParams,
 } from "./post.type";
 import { useState } from "react";
 
@@ -34,8 +35,10 @@ export const useUserGetPosts = (params: GetPostsParams) => {
   const { getPostsUserAction } = usePostAction();
 
   const { data, isLoading } = useQuery({
-    queryKey: [PostKeys.getPosts, params.page, params.userId, params.limit],
+    queryKey: [PostKeys.getPosts, params.page, params.userId, params.pageSize],
     queryFn: () => getPostsUserAction(params),
+    staleTime: 0,
+    gcTime: 0,
   });
 
   return {
@@ -48,7 +51,7 @@ export const useGetRandomPosts = (params: GetRandomPostsParams) => {
   const { getRandomPostsAction } = usePostAction();
 
   const { data, isLoading } = useQuery({
-    queryKey: [PostKeys.getRandomPosts, params.page, params.limit],
+    queryKey: [PostKeys.getRandomPosts, params.page, params.pageSize],
     queryFn: () => getRandomPostsAction(params),
   });
 
@@ -92,7 +95,7 @@ export const useGetPostLikers = (params: GetLikersParams) => {
   const { getPostLikersAction } = usePostAction();
 
   const { data, isLoading } = useQuery({
-    queryKey: [PostKeys.likers, params.page, params.limit, params.postId],
+    queryKey: [PostKeys.likers, params.page, params.pageSize, params.postId],
     queryFn: () => getPostLikersAction(params),
   });
 
@@ -115,5 +118,21 @@ export const useDeletePost = () => {
     deletePostMutate: mutate,
     deletePostIsPending: isPending,
     deletePostIsSuccess: isSuccess,
+  };
+};
+
+export const useSearchPost = () => {
+  const { searchPostsAction } = usePostAction();
+
+  const { mutate, isPending, isSuccess, data } = useMutation({
+    mutationKey: [PostKeys.search],
+    mutationFn: (params: SearchPostsParams) => searchPostsAction(params),
+  });
+
+  return {
+    searchPostData: data,
+    searchPostMutate: mutate,
+    searchPostIsPending: isPending,
+    searchPostIsSuccess: isSuccess,
   };
 };
