@@ -6,6 +6,7 @@ import {
   GetLikersParams,
   GetPostsParams,
   GetRandomPostsParams,
+  SearchPostsParams,
 } from "./post.type";
 import { useState } from "react";
 
@@ -117,5 +118,21 @@ export const useDeletePost = () => {
     deletePostMutate: mutate,
     deletePostIsPending: isPending,
     deletePostIsSuccess: isSuccess,
+  };
+};
+
+export const useSearchPost = () => {
+  const { searchPostsAction } = usePostAction();
+
+  const { mutate, isPending, isSuccess, data } = useMutation({
+    mutationKey: [PostKeys.search],
+    mutationFn: (params: SearchPostsParams) => searchPostsAction(params),
+  });
+
+  return {
+    searchPostData: data,
+    searchPostMutate: mutate,
+    searchPostIsPending: isPending,
+    searchPostIsSuccess: isSuccess,
   };
 };

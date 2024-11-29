@@ -4,4 +4,5 @@ export const PostUrls = {
   getRandomPosts: "/post/random",
   toggleLike: "/post/toggle-like",
   likers: "/post/likers",
+  search: "/post/search",
 };

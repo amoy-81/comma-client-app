@@ -11,6 +11,8 @@ import {
   GetPostsResponse,
   GetRandomPostsParams,
   GetRandomPostsResponse,
+  SearchPostsParams,
+  SearchPostsResponse,
   ToggleLikeResponse,
 } from "./post.type";
 import { PostUrls } from "./post.urls";
@@ -122,6 +124,21 @@ const usePostAction = () => {
     return response;
   };
 
+  const searchPostsAction = async (
+    params: SearchPostsParams
+  ): Promise<SearchPostsResponse> => {
+    const queryParams = generateQueryParams(params);
+
+    const url = `${PostUrls.search}${queryParams ? `?${queryParams}` : ""}`;
+
+    const response = await axiosInstance
+      .get(url)
+      .then((res) => res.data)
+      .catch((err) => err);
+
+    return response;
+  };
+
   return {
     createPostAction,
     getPostsUserAction,
@@ -130,6 +147,7 @@ const usePostAction = () => {
     toggleLikeAction,
     getPostLikersAction,
     deletePostAction,
+    searchPostsAction,
   };
 };
 

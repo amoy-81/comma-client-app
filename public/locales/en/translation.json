@@ -44,5 +44,8 @@
   "users": "Users",
   "post": "Post",
   "What is happening ?": "What is happening ?",
-  "send": "Send..."
+  "send": "Send...",
+  "searchValueEmpty": "Enter something to search!",
+  "searchAmongPosts": "Search among posts...",
+  "searchPlaceholder": "Search among datas..."
 }
