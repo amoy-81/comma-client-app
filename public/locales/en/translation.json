@@ -47,5 +47,7 @@
   "send": "Send...",
   "searchValueEmpty": "Enter something to search!",
   "searchAmongPosts": "Search among posts...",
-  "searchPlaceholder": "Search among datas..."
+  "searchPlaceholder": "Search among datas...",
+  "newspaper": "Newspaper",
+  "board": "Board"
 }
