@@ -4,6 +4,7 @@ import { Comment, Favorite, FavoriteBorder, Share } from "@mui/icons-material";
 import { Avatar, Box, Typography } from "@mui/material";
 import { formatDate } from "../../utils/format-date.util";
 import { detectDirection } from "../../utils/detect-direction.util";
+import { useNavigate } from "react-router-dom";
 
 const Post: FC<PostProps> = ({
   text_content,
@@ -13,9 +14,17 @@ const Post: FC<PostProps> = ({
   hasLike,
   created_at,
 }) => {
+  const navigate = useNavigate();
+
+  const handleClickOnUser = () => {
+    navigate(`/profile?user=${user.id}`);
+  };
   return (
     <Box className="p-2">
-      <Box className="flex gap-2 p-2 items-center">
+      <Box
+        onClick={handleClickOnUser}
+        className="flex gap-2 p-2 items-center cursor-pointer"
+      >
         <Avatar
           src={user.avatar}
           className="size-10 !text-primary-600 !bg-secondary-600"
@@ -32,11 +41,11 @@ const Post: FC<PostProps> = ({
       >
         {text_content}
       </Typography>
-      <img className="w-full max-h-60 p-2" src={image_content} />
+      <img className="max-w-full max-h-60 p-2" src={image_content} />
 
       <Box
         dir="ltr"
-        className="flex gap-2 items-center p-2 text-secondary-500 "
+        className="flex gap-8 items-center justify-center p-2 text-secondary-500 "
       >
         <Box className="flex items-center gap-1">
           {hasLike ? (
