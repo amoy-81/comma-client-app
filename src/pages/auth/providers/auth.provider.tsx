@@ -13,7 +13,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children, mode }) => {
   const { getSession, user, isLoading } = useAuth();
 
   useEffect(() => {
-    if (user && mode === "auth") navigate("/posts");
+    if (user && mode === "auth") navigate("/");
   }, [user, isLoading]);
 
   useEffect(() => {
