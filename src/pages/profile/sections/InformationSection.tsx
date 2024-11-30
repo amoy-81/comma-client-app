@@ -2,21 +2,26 @@ import { Avatar, Box, Button, Skeleton, Typography } from "@mui/material";
 import { UserRoles } from "../../../api/user/user.type";
 import InfoSkeleton from "../components/skeleton/InfoSkeleton";
 import ProfileBanner from "@/assets/svg/profile-banner.svg";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useGetUser } from "../../../api/user/user.querys";
 import useAuth from "../../../hooks/use-auth.hook";
 import { t } from "i18next";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { formatDate } from "../../../utils/format-date.util";
+import { useCommunity } from "../../../hooks/use-community.hook";
 
 const InformationSection = () => {
+  const { followings, followUser, unfollowUser, isPending } = useCommunity();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   const userId = searchParams.get("user");
+  const id = parseInt(userId || "");
 
+  console.log(id, "GGG");
   const { getUserData, getUserLoading } = useGetUser(
-    parseInt(userId || "") || (user?.id as number)
+    id || (user?.id as number)
   );
 
   const { avatar, name, email, bio, role, created_at } =
@@ -27,6 +32,18 @@ const InformationSection = () => {
     { count: 0, label: t("followers") },
     { count: 0, label: t("followed") },
   ];
+
+  const handleFollow = () => {
+    followUser(id);
+  };
+
+  const handleunFollow = () => {
+    unfollowUser(id);
+  };
+
+  const handleNavigateProfile = () => {
+    navigate("/profile");
+  };
 
   return (
     <>
@@ -50,12 +67,39 @@ const InformationSection = () => {
       </Box>
       <Box className="">
         <Box className="w-full flex justify-end p-2 pt-4">
-          <Button
-            className="!text-sm !font-semibold !rounded-2xl"
-            variant="contained"
-          >
-            {t("follow")}
-          </Button>
+          {!Number.isNaN(id) ? (
+            !followings.includes(id) ? (
+              <Button
+                onClick={handleFollow}
+                disabled={isPending}
+                variant="contained"
+                className="!h-8 !w-20 !text-xs "
+                size="small"
+              >
+                {isPending ? t("wait...") : t("follow")}
+              </Button>
+            ) : (
+              <Button
+                onClick={handleunFollow}
+                disabled={isPending}
+                variant="outlined"
+                className="!h-8 !w-20 !text-xs "
+                size="small"
+              >
+                {isPending ? t("wait...") : t("remove")}
+              </Button>
+            )
+          ) : (
+            <Button
+              onClick={handleNavigateProfile}
+              disabled={isPending}
+              variant="text"
+              className="!h-8 !w-20 !text-xs "
+              size="small"
+            >
+              {t("profile")}
+            </Button>
+          )}
         </Box>
 
         {getUserLoading ? (
