@@ -19,7 +19,6 @@ const InformationSection = () => {
   const userId = searchParams.get("user");
   const id = parseInt(userId || "");
 
-  console.log(id, "GGG");
   const { getUserData, getUserLoading } = useGetUser(
     id || (user?.id as number)
   );
@@ -67,7 +66,7 @@ const InformationSection = () => {
       </Box>
       <Box className="">
         <Box className="w-full flex justify-end p-2 pt-4">
-          {!Number.isNaN(id) ? (
+          {!Number.isNaN(id) && id !== user?.id ? (
             !followings.includes(id) ? (
               <Button
                 onClick={handleFollow}
