@@ -5,12 +5,28 @@ import { useNavigate } from "react-router-dom";
 import { UserRoles } from "../../api/user/user.type";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { t } from "i18next";
+import { useCommunity } from "../../hooks/use-community.hook";
+import useAuth from "../../hooks/use-auth.hook";
 
 const UserRow: FC<UserRowProps> = ({ id, name, avatar, role }) => {
+  const { user } = useAuth();
+  const { followings, followUser, unfollowUser, isPending } = useCommunity();
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/profile?user=${id}`);
+  };
+
+  const handleFollow = () => {
+    followUser(id);
+  };
+
+  const handleunFollow = () => {
+    unfollowUser(id);
+  };
+
+  const handleNavigateProfile = () => {
+    navigate("/profile");
   };
 
   return (
@@ -31,9 +47,39 @@ const UserRow: FC<UserRowProps> = ({ id, name, avatar, role }) => {
         )}
       </Box>
 
-      <Button variant="contained" className="!h-8 !text-xs " size="small">
-        {t("follow")}
-      </Button>
+      {id !== user?.id ? (
+        !followings.includes(id) ? (
+          <Button
+            onClick={handleFollow}
+            disabled={isPending}
+            variant="contained"
+            className="!h-8 !w-20 !text-xs "
+            size="small"
+          >
+            {isPending ? t("wait...") : t("follow")}
+          </Button>
+        ) : (
+          <Button
+            onClick={handleunFollow}
+            disabled={isPending}
+            variant="outlined"
+            className="!h-8 !w-20 !text-xs "
+            size="small"
+          >
+            {isPending ? t("wait...") : t("remove")}
+          </Button>
+        )
+      ) : (
+        <Button
+          onClick={handleNavigateProfile}
+          disabled={isPending}
+          variant="text"
+          className="!h-8 !w-20 !text-xs "
+          size="small"
+        >
+          {t("profile")}
+        </Button>
+      )}
     </Box>
   );
 };
