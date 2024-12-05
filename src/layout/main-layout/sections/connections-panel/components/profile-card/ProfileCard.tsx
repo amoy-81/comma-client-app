@@ -10,8 +10,10 @@ const ProfileCard = () => {
         className="!size-11 border-4 border-secondary-900 !text-primary-600 !bg-secondary-600"
       />
       <Box className="flex flex-col">
-        <Typography className="!text-sm !font-normal">{user?.name}</Typography>
-        <Typography className="!text-xs !font-normal !text-secondary-400">
+        <Typography className="!w-32 !text-sm !font-normal !truncate">
+          {user?.name}
+        </Typography>
+        <Typography className="!w-32 !text-xs !font-normal !text-secondary-400 !truncate">
           {user?.email}
         </Typography>
       </Box>
