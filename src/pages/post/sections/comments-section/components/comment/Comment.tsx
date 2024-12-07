@@ -4,16 +4,31 @@ import { detectDirection } from "../../../../../../utils/detect-direction.util";
 import { useNavigate } from "react-router-dom";
 import { FC } from "react";
 import { CommentProps } from "./@types/comment.type";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import VotingAction from "./components/VotingAction";
+import { mergeClasses } from "../../../../../../utils/merge-classess.util";
 
-const Comment: FC<CommentProps> = ({ user, text, created_at }) => {
+const Comment: FC<CommentProps> = ({
+  id,
+  user,
+  text,
+  created_at,
+  voteCount,
+  hasVoted,
+  variant = "normal",
+}) => {
   const navigate = useNavigate();
 
   const handleClickOnUser = () => {
     navigate(`/profile?user=${user.id}`);
   };
   return (
-    <Box className="p-2 bg-secondary-800 rounded-lg">
+    <Box
+      className={mergeClasses(
+        "p-2 bg-secondary-800 rounded-lg",
+        variant === "gold" &&
+          "bg-gradient-to-br from-amber-400 to-yellow-600 flash-effect"
+      )}
+    >
       <Box
         onClick={handleClickOnUser}
         className="flex gap-2 p-2 items-center cursor-pointer"
@@ -22,14 +37,26 @@ const Comment: FC<CommentProps> = ({ user, text, created_at }) => {
           src={user.avatar}
           className="size-10 !text-primary-600 !bg-secondary-600"
         />
-        <Typography>{user.name}</Typography>
-        <Typography className="!text-xs text-secondary-500">
+        <Typography
+          className={mergeClasses(variant === "gold" && "!text-secondary-900")}
+        >
+          {user.name}
+        </Typography>
+        <Typography
+          className={mergeClasses(
+            "!text-xs text-secondary-500",
+            variant === "gold" && "!text-secondary-900"
+          )}
+        >
           {formatDate(created_at)}
         </Typography>
       </Box>
       <Typography
         dir={detectDirection(text)}
-        className="!font-light text-sm p-2 px-4"
+        className={mergeClasses(
+          "!font-light text-sm p-2 px-4",
+          variant === "gold" && "!text-secondary-900"
+        )}
         component={"p"}
       >
         {text}
@@ -37,9 +64,9 @@ const Comment: FC<CommentProps> = ({ user, text, created_at }) => {
 
       <Box
         dir="ltr"
-        className="flex gap-8 items-center justify-center p-2 text-secondary-500 "
+        className="flex gap-8 items-center justify-center p-2 text-secondary-500"
       >
-        <ThumbUpIcon className="cursor-pointer hover:text-primary-500" />
+        <VotingAction {...{ id, hasVoted, voteCount }} />
       </Box>
     </Box>
   );

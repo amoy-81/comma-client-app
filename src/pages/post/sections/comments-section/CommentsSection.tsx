@@ -18,31 +18,39 @@ import useInfiniteScroll from "../../../../hooks/use-infinite-scroll.hook";
 import CommentSkeleton from "./components/comment/CommentSkeleton";
 
 const CommentsSection = () => {
+  // hooks
   const [searchParams] = useSearchParams();
   const postId = searchParams.get("postId");
 
   const { user } = useAuth();
   const { avatar } = user || {};
 
+  // states
   const [createCommentState, setCreateCommentState] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
   const skeletonArray = Array.from({ length: 4 });
 
+  // apis
   const { createCommentMutate, createCommentIsPending } = useCreateComment();
-
   const { getCommentListData, getCommentListLoading } = useGetCommentList({
     postId: parseInt(postId || "") || 0,
     page: pageNumber,
     pageSize: 5,
   });
 
+  // infinite scroll
   const { setLastItem, data, page, reset } =
     useInfiniteScroll(getCommentListData);
+
+  const maxVoteItem = data.reduce((max, item) => {
+    return item.voteCount > max.voteCount ? item : max;
+  }, data[0]);
 
   useEffect(() => {
     setPageNumber(page);
   }, [page]);
 
+  // handlers
   const handleCreateComment = () => {
     createCommentMutate(
       { post_id: parseInt(postId || ""), text: createCommentState },
@@ -115,7 +123,14 @@ const CommentsSection = () => {
         {!!data.length &&
           data?.map((comment) => (
             <Box key={comment.id} ref={setLastItem}>
-              <Comment {...comment} />
+              <Comment
+                variant={
+                  maxVoteItem.id === comment.id && comment.voteCount > 0
+                    ? "gold"
+                    : "normal"
+                }
+                {...comment}
+              />
             </Box>
           ))}
 
