@@ -1,27 +1,67 @@
-import { Avatar, Box, Button, TextField } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  CircularProgress,
+  TextField,
+} from "@mui/material";
 import { t } from "i18next";
+import useAuth from "../../../../hooks/use-auth.hook";
+import { useEffect, useState } from "react";
+import {
+  useCreateComment,
+  useGetCommentList,
+} from "../../../../api/comment/comment.querys";
+import { useSearchParams } from "react-router-dom";
+import Comment from "./components/comment/Comment";
+import useInfiniteScroll from "../../../../hooks/use-infinite-scroll.hook";
+import CommentSkeleton from "./components/comment/CommentSkeleton";
 
 const CommentsSection = () => {
-  //   const navigate = useNavigate();
-  //   const { user } = useAuth();
-  //   const { avatar } = user || {};
+  // hooks
+  const [searchParams] = useSearchParams();
+  const postId = searchParams.get("postId");
 
-  //   const [createPostState, setCreatePostState] = useState<CreatePostRequest>({
-  //     text_content: "",
-  //     image_content: null,
-  //   });
+  const { user } = useAuth();
+  const { avatar } = user || {};
 
-  //   const handleTextContentChange = (text_content: string) => {
-  //     setCreatePostState((prev) => ({ ...prev, text_content }));
-  //   };
+  // states
+  const [createCommentState, setCreateCommentState] = useState("");
+  const [pageNumber, setPageNumber] = useState(1);
+  const skeletonArray = Array.from({ length: 4 });
 
-  //   const handleCreatePost = () => {
-  //     createPostMutate(createPostState, {
-  //       onSuccess: () => {
-  //         navigate("/profile");
-  //       },
-  //     });
-  //   };
+  // apis
+  const { createCommentMutate, createCommentIsPending } = useCreateComment();
+  const { getCommentListData, getCommentListLoading } = useGetCommentList({
+    postId: parseInt(postId || "") || 0,
+    page: pageNumber,
+    pageSize: 5,
+  });
+
+  // infinite scroll
+  const { setLastItem, data, page, reset } =
+    useInfiniteScroll(getCommentListData);
+
+  const maxVoteItem = data.reduce((max, item) => {
+    return item.voteCount > max.voteCount ? item : max;
+  }, data[0]);
+
+  useEffect(() => {
+    setPageNumber(page);
+  }, [page]);
+
+  // handlers
+  const handleCreateComment = () => {
+    createCommentMutate(
+      { post_id: parseInt(postId || ""), text: createCommentState },
+      {
+        onSuccess: () => {
+          setCreateCommentState("");
+          reset();
+        },
+      }
+    );
+  };
 
   return (
     <>
@@ -31,18 +71,15 @@ const CommentsSection = () => {
             <Box className="p-2">
               <Avatar
                 className="!size-10 !text-primary-600 !bg-secondary-600"
-                // src={avatar}
+                src={avatar}
               />
             </Box>
             <Box className="w-full">
               <TextField
                 className="!w-full !border-0"
-                placeholder={t("What is happening ?")}
-                // value={createPostState.text_content}
-                // onChange={(e) => handleTextContentChange(e.target.value)}
-                multiline
-                rows={2}
-                maxRows={4}
+                placeholder={t("What is your feedback?")}
+                value={createCommentState}
+                onChange={(e) => setCreateCommentState(e.target.value)}
                 sx={{
                   "& .MuiOutlinedInput-root": {
                     border: "none",
@@ -67,29 +104,40 @@ const CommentsSection = () => {
             fullWidth
             variant="contained"
             className="!rounded-3xl min-w-28"
-            // onClick={handleCreatePost}
-            // disabled={
-            // //   !createPostState.text_content.length || createPostIsPending
-            // }
+            onClick={handleCreateComment}
+            disabled={!createCommentState.length || createCommentIsPending}
           >
-            {t("send")}
+            {createCommentIsPending ? t("send") : t("answer")}
           </Button>
         </Box>
 
-        {/* {createPostIsPending && (
+        {createCommentIsPending && (
           <Box className="absolute top-0 left-0 w-full h-full backdrop-blur-sm flex justify-center items-center">
-            <CircularProgress
-              variant="determinate"
-              value={createPostProgress}
-            />
+            <CircularProgress variant="indeterminate" />
           </Box>
-        )} */}
+        )}
       </Box>
 
-      <Box
-        component={"hr"}
-        className="mx-4 border-white/25 mt-4 md:block hidden"
-      />
+      <Box className="flex flex-col gap-2 mt-4">
+        {/* Comments */}
+        {!!data.length &&
+          data?.map((comment) => (
+            <Box key={comment.id} ref={setLastItem}>
+              <Comment
+                variant={
+                  maxVoteItem.id === comment.id && comment.voteCount > 0
+                    ? "gold"
+                    : "normal"
+                }
+                {...comment}
+              />
+            </Box>
+          ))}
+
+        {/* Skeleton */}
+        {getCommentListLoading &&
+          skeletonArray.map((_, index) => <CommentSkeleton key={index} />)}
+      </Box>
     </>
   );
 };

@@ -43,7 +43,13 @@ const useInfiniteScroll = (fetchedData: any) => {
     }
   };
 
-  return { setLastItem, data, page };
+  const reset = () => {
+    setData([]);
+    setPage(1);
+    setHasMore(true);
+  };
+
+  return { setLastItem, data, page, reset };
 };
 
 export default useInfiniteScroll;

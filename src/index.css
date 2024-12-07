@@ -46,3 +46,34 @@
   scrollbar-width: thin;
   scrollbar-color: #0e18289a #ffffff00;
 }
+
+.flash-effect {
+  width: 100%;
+  display: inline-block;
+  position: relative;
+  border: 2px solid #000;
+  overflow: hidden;
+}
+
+.flash-effect::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -200%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  transform: skewX(-45deg);
+  animation: flash 2s infinite ease-in-out;
+}
+
+@keyframes flash {
+  0% {
+    left: -200%;
+  }
+
+  100% {
+    left: 200%;
+  }
+}
