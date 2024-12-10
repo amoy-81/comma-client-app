@@ -10,6 +10,7 @@ const PreviewPost: FC<PreviewPostProps> = ({ avatar, name, text_content }) => {
         <Avatar
           src={avatar || ""}
           className="size-10 !text-primary-600 !bg-secondary-600"
+          
         />
         <Typography className="!text-sm !font-normal">{name}</Typography>
       </Box>
