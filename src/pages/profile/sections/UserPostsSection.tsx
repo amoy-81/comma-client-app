@@ -23,7 +23,11 @@ const UserPostsSection = () => {
     userId: parseInt(userId || "") || (user?.id as number),
   });
 
-  const { setLastItem, data, page } = useInfiniteScroll(getPostsData);
+  const { setLastItem, data, page, reset } = useInfiniteScroll(getPostsData);
+
+  useEffect(() => {
+    reset();
+  }, [userId]);
 
   useEffect(() => {
     setPageNumber(page);
