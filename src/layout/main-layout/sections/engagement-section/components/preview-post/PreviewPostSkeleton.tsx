@@ -1,6 +1,6 @@
 import { Box, Skeleton } from "@mui/material";
 
-const PostSkeleton = () => {
+const PreviewPostSkeleton = () => {
   return (
     <Box className="p-2">
       <Box className="flex gap-2 items-center cursor-pointer">
@@ -24,4 +24,4 @@ const PostSkeleton = () => {
   );
 };
 
-export default PostSkeleton;
+export default PreviewPostSkeleton;

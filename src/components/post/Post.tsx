@@ -19,6 +19,7 @@ const Post: FC<PostProps> = ({
   const handleClickOnUser = () => {
     navigate(`/profile?user=${user.id}`);
   };
+
   return (
     <Box className="p-2">
       <Box

@@ -3,15 +3,17 @@ import { useGetRandomPosts } from "../../../../../../api/post/post.querys";
 import PreviewPost from "../preview-post/PreviewPost";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import PostSkeleton from "../preview-post/PostSkeletonPreview";
+import PostSkeleton from "../preview-post/PreviewPostSkeleton";
 
 const TrendsPosts = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const skeletonArray = Array.from({ length: 4 });
+
   const { getRandomPostsData, getRandomPostsLoading } = useGetRandomPosts({
     page: 1,
-    pageSize: 3,
+    pageSize: 4,
   });
 
   const handleNavigateSearch = () => {
@@ -20,13 +22,8 @@ const TrendsPosts = () => {
 
   return (
     <Box className="!w-full !h-[400px] p-4 bg-secondary-900 border border-solid border-secondary-800 rounded-3xl flex flex-col gap-4 overflow-hidden relative">
-      {getRandomPostsLoading && (
-        <>
-          <PostSkeleton />
-          <PostSkeleton />
-          <PostSkeleton />
-        </>
-      )}
+      {getRandomPostsLoading &&
+        skeletonArray.map((_, index) => <PostSkeleton key={index} />)}
 
       {getRandomPostsData?.map((post) => (
         <PreviewPost key={post.id} {...{ ...post, ...post.user }} />

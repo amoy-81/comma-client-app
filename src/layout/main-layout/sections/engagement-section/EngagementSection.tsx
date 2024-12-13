@@ -7,7 +7,6 @@ const EngagementSection = () => {
     <Box className="col-span-3 hidden xl:flex flex-col gap-4">
       {/* Search Section */}
       <ShortSearchUser />
-
       {/* Posts Section */}
       <TrendsPosts />
     </Box>
