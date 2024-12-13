@@ -1,12 +1,14 @@
 import { FC } from "react";
 import { PostProps } from "./@types/post.type";
-import { Comment, Favorite, FavoriteBorder, Share } from "@mui/icons-material";
+import { Comment, Share } from "@mui/icons-material";
 import { Avatar, Box, Typography } from "@mui/material";
 import { formatDate } from "../../utils/format-date.util";
 import { detectDirection } from "../../utils/detect-direction.util";
 import { useNavigate } from "react-router-dom";
+import LikeAction from "./components/LikeAction";
 
 const Post: FC<PostProps> = ({
+  id,
   text_content,
   image_content,
   user,
@@ -18,6 +20,10 @@ const Post: FC<PostProps> = ({
 
   const handleClickOnUser = () => {
     navigate(`/profile?user=${user.id}`);
+  };
+
+  const handleNavigateComment = () => {
+    navigate(`/post?postId=${id}`);
   };
 
   return (
@@ -48,15 +54,14 @@ const Post: FC<PostProps> = ({
         dir="ltr"
         className="flex gap-8 items-center justify-center p-2 text-secondary-500 "
       >
-        <Box className="flex items-center gap-1">
-          {hasLike ? (
-            <Favorite className="text-red-600" />
-          ) : (
-            <FavoriteBorder className="cursor-pointer" />
-          )}
-          <Typography className="!text-xs">{likeCount}</Typography>
-        </Box>
-        <Comment className="cursor-pointer" />
+        {/* Like */}
+        <LikeAction {...{ id, likeCount, hasLike }} />
+        {/* Comment */}
+        <Comment
+          onClick={handleNavigateComment}
+          className="cursor-pointer hover:text-primary-500"
+        />
+        {/* Share Post */}
         <Share className="cursor-pointer" />
       </Box>
       <Box

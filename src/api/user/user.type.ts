@@ -20,6 +20,12 @@ export type GetUserByIdResponse = {
     following: User[];
     followers: User[];
   };
+  status: {
+    userId: number;
+    postCount: number;
+    followerCount: number;
+    followingCount: number;
+  };
 };
 
 export type FollowResponse = {
