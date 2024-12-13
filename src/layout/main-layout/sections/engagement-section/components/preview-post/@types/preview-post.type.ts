@@ -3,4 +3,5 @@ export type PreviewPostProps = {
   avatar: string | null;
   name: string;
   text_content: string;
+  userId: number;
 };

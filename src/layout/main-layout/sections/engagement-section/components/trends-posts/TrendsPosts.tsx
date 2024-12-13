@@ -26,7 +26,15 @@ const TrendsPosts = () => {
         skeletonArray.map((_, index) => <PostSkeleton key={index} />)}
 
       {getRandomPostsData?.map((post) => (
-        <PreviewPost key={post.id} {...{ ...post, ...post.user }} />
+        <PreviewPost
+          key={post.id}
+          {...{
+            ...post,
+            ...post.user,
+            id: post.id,
+            userId: post.user.id,
+          }}
+        />
       ))}
 
       <Box className="w-full h-16 bg-gradient-to-t from-secondary-900 to-transparent absolute bottom-0 left-0 flex justify-center items-center">
