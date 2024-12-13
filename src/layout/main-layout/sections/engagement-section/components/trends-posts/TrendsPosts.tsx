@@ -3,7 +3,7 @@ import { useGetRandomPosts } from "../../../../../../api/post/post.querys";
 import PreviewPost from "../preview-post/PreviewPost";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import PostSkeleton from "../preview-post/PostSkeletonPreview"; // ایمپورت کامپوننت اسکلتون
+import PostSkeleton from "../preview-post/PostSkeletonPreview";
 
 const TrendsPosts = () => {
   const { t } = useTranslation();
