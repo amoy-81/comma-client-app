@@ -22,15 +22,21 @@ const InformationSection = () => {
   const { getUserData, getUserLoading } = useGetUser(
     id || (user?.id as number)
   );
+  
 
   const { avatar, name, email, bio, role, created_at } =
     getUserData?.user || {};
 
+    const { postCount, followerCount, followingCount } =
+    getUserData?.status || {};
+
   const userInfoDetails = [
-    { count: 0, label: t("posts") },
-    { count: 0, label: t("followers") },
-    { count: 0, label: t("followed") },
+    { count: postCount, label: t("posts") },
+    { count: followerCount, label: t("followers") },
+    { count: followingCount, label: t("followed") },
   ];
+
+  
 
   const handleFollow = () => {
     followUser(id);

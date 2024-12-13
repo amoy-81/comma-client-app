@@ -39,7 +39,7 @@ const TrendsPosts = () => {
 
       <Box className="w-full h-16 bg-gradient-to-t from-secondary-900 to-transparent absolute bottom-0 left-0 flex justify-center items-center">
         <Button
-          className="!font-medium !text-sm text-primary-600 cursor-pointer"
+          className="!font-medium !text-sm text-primary-600 cursor-pointer !bg-secondary-800/20 !backdrop-blur-sm"
           onClick={handleNavigateSearch}
         >
           {t("viewMore")}
