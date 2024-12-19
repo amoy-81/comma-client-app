@@ -1,20 +1,28 @@
-import { Mode, Newspaper, PostAdd, Search } from "@mui/icons-material";
-import PersonIcon from "@mui/icons-material/Person";
+import {
+  Mode,
+  Newspaper,
+  Notifications,
+  PostAdd,
+  Search,
+} from "@mui/icons-material";
 import { Box } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { mergeClasses } from "../../../utils/merge-classess.util";
+import { useGetUnreadCountNotif } from "../../../api/notif/notif.querys";
 
 const navItems = [
   { id: 1, icon: <Newspaper />, link: "/newspaper" },
-  { id: 2, icon: <PersonIcon />, link: "/profile" },
-  { id: 3, icon: <Mode />, link: "/" },
   { id: 4, icon: <Search />, link: "/search" },
+  { id: 3, icon: <Mode />, link: "/" },
+  { id: 2, icon: <Notifications />, link: "/notif" },
   { id: 5, icon: <PostAdd />, link: "/board" },
 ];
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { getUnreadCountNotifData } = useGetUnreadCountNotif();
 
   // Determine the selected item based on the current path
   const selectedId =
@@ -32,13 +40,27 @@ const Navbar = () => {
             key={id}
             onClick={() => handleNavigation(link)}
             className={mergeClasses(
-              "cursor-pointer transition active:scale-50",
+              "cursor-pointer transition active:scale-90",
               selectedId === id
                 ? "!text-primary-600 !bg-secondary-600 border border-solid !border-primary-600 rounded-full p-1"
                 : ""
             )}
           >
-            {icon}
+            {link === "/notif" ? (
+              <Box className="relative">
+                {!!getUnreadCountNotifData?.count && (
+                  <Box
+                    component={"span"}
+                    className="bg-red-600 rounded-full absolute text-white text-[10px] font-bold px-1 -right-1 flex justify-center items-center"
+                  >
+                    {getUnreadCountNotifData?.count}
+                  </Box>
+                )}
+                {icon}
+              </Box>
+            ) : (
+              icon
+            )}
           </Box>
         ))}
       </Box>
