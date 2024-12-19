@@ -9,6 +9,7 @@ import SearchPage from "../pages/search/SearchPage";
 import BoardPage from "../pages/board/BoardPage";
 import NewspaperPage from "../pages/newspaper/NewspaperPage";
 import PostPage from "../pages/post/PostPage";
+import NotifPage from "../pages/notif/NotifPage";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
       { path: "board", element: <BoardPage /> },
       { path: "newspaper", element: <NewspaperPage /> },
       { path: "post", element: <PostPage /> },
+      { path: "notif", element: <NotifPage /> },
     ],
   },
   {
