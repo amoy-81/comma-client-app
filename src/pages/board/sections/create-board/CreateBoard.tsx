@@ -16,8 +16,6 @@ const CreateBoard: React.FC = () => {
 
     addBoardMutate({
       text,
-      userId: user?.id,
-      userName: user?.name,
     });
     setText("");
   };

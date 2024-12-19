@@ -1,11 +1,9 @@
 import React from "react";
 import { Avatar, Box, Typography, Divider } from "@mui/material";
 import { useGetBoard } from "../../../../api/board/board.querys";
-import useAuth from "../../../../hooks/use-auth.hook";
 import InfoSkeleton from "./BoardSkeleton";
 
 const ShowBoard: React.FC = () => {
-  const { user } = useAuth();
   const { getBoardData, getBoardLoading } = useGetBoard({ page: 1, pageSize: 10 });
 
   if (getBoardLoading) {
