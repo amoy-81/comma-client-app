@@ -1,4 +1,4 @@
-## comma client app
+## Comma Client App
 
 ## How to install and run
 
