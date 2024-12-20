@@ -16,7 +16,7 @@ const NewsPaperCard: FC<NewsPaperCardProps> = ({
 }) => {
   const [imageIsLoaded, setImageIsLoaded] = useState(false);
   return (
-    <Box className="relative h-full rounded-3xl overflow-hidden bg-secondary-800 hover:-translate-y-1 transition border-0 hover:border-[1px] border-solid border-primary-600 shadow ">
+    <Box className="relative h-full rounded-3xl overflow-hidden bg-secondary-600 hover:-translate-y-1 transition border-0 hover:border-[1px] border-solid border-primary-600 shadow ">
       {!imageIsLoaded && (
         <Box className="w-full h-full absolute top-0 left-0 z-[3] flash-effect" />
       )}
