@@ -1,4 +1,5 @@
 import { Pagination } from "../@types/pagination.type";
+import { Poster } from "../theme/theme.type";
 import { User } from "../user/user.type";
 
 export type NewspaperSection = {
@@ -24,14 +25,7 @@ export type Newspaper = {
   updatedAt: string;
   sections: NewspaperSection[];
   user: User;
-  poster: {
-    id: 1;
-    title: "Whispers of Forgotten Words";
-    description: "A journey through forgotten tales and hidden secrets.";
-    imageUrl: "/poster/Whispers-of-Forgotten-Words.jpg";
-    createdAt: "2024-12-19T22:45:07.965Z";
-    updatedAt: "2024-12-19T22:45:07.965Z";
-  };
+  poster: Poster;
 };
 
 export type CreateNewsPapersResponse = {
