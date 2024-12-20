@@ -55,5 +55,6 @@
   "wait...": "wait...",
   "What is your feedback?": "What is your feedback?",
   "answer": "Answer",
-  "Writing my newspaper": "Writing my newspaper"
+  "Writing my newspaper": "Writing newspaper",
+  "newspaper is empty": "There is no newspaper for today, you can design your newspaper tomorrow."
 }

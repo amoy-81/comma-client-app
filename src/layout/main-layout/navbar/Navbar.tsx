@@ -42,7 +42,7 @@ const Navbar = () => {
             className={mergeClasses(
               "cursor-pointer transition active:scale-90",
               selectedId === id
-                ? "!text-primary-600 !bg-secondary-600 border border-solid !border-primary-600 rounded-full p-1"
+                ? "!text-primary-600 !bg-secondary-600/50 border border-solid !border-primary-600 rounded-full p-1"
                 : ""
             )}
           >
