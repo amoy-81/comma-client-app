@@ -33,7 +33,7 @@ const Navbar = () => {
   };
 
   return (
-    <Box className="w-full fixed left-0 bottom-4 flex justify-center items-center">
+    <Box className="w-full fixed z-40 left-0 bottom-4 flex justify-center items-center">
       <Box className="w-80 h-11 p-2 px-4 !bg-secondary-600/50 backdrop-blur-lg border border-solid !text-primary-700 !border-primary-700 rounded-3xl flex items-center justify-between gap-1">
         {navItems.map(({ id, icon, link }) => (
           <Box
@@ -42,7 +42,7 @@ const Navbar = () => {
             className={mergeClasses(
               "cursor-pointer transition active:scale-90",
               selectedId === id
-                ? "!text-primary-600 !bg-secondary-600 border border-solid !border-primary-600 rounded-full p-1"
+                ? "!text-primary-600 !bg-secondary-600/50 border border-solid !border-primary-600 rounded-full p-1"
                 : ""
             )}
           >
