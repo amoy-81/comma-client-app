@@ -19,19 +19,21 @@ export const useBoardComment = () => {
   };
 };
 
-export const useGetBoard = (params: GetBoardParams) => {
-  const { getBoardAction } = useBoardAction();
-
-  const { data, isLoading } = useQuery({
-    queryKey: [BoardKeys.get, params.page, params.pageSize],
-    queryFn: () => getBoardAction(params),
-    staleTime: 0,
-    gcTime: 0,
-    refetchInterval: 20000,
-  });
-
-  return {
-    getBoardData: data,
-    getBoardLoading: isLoading,
+  export const useGetBoard = (params: GetBoardParams) => {
+    const { getBoardAction } = useBoardAction();
+  
+    const { data, isLoading, refetch } = useQuery({
+      queryKey: [BoardKeys.get, params.page, params.pageSize],
+      queryFn: () => getBoardAction(params),
+      staleTime: 0,
+      gcTime: 0,
+      refetchInterval: 20000,
+    });
+  
+    return {
+      getBoardData: data,
+      getBoardLoading: isLoading,
+      refetch,
+    };
   };
-};
+  

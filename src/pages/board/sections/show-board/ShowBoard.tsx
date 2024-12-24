@@ -26,41 +26,42 @@ const ShowBoard: React.FC = () => {
 
   return (
     <Box
-      style={{
-        backgroundColor: "#0D1117",
-        color: "#E6EDF3",
-        borderRadius: "8px",
-        padding: "16px",
-      }}
-    >
-      <Divider style={{ backgroundColor: "#30363D", marginBottom: "16px" }} />
-
-      <Box display="flex" flexDirection="column" gap="16px">
-        {getBoardData.map((item, index) => (
-          <Box key={item.id} display="flex" gap="12px" alignItems="flex-start">
-            <Avatar src={item.user?.avatar || ""} alt={item.user?.name} style={{ width: 48, height: 48 }} />
-            <Box flex={1}>
-              <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Box>
-                  <Typography style={{ fontWeight: "bold", color: "#FFF" }}>
-                    {item.user?.name}
-                  </Typography>
-                  <Typography style={{ fontSize: "14px", color: "#8B949E" }}>
-                    @{item.user?.name?.replace(" ", "_")}
-                  </Typography>
-                </Box>
-                <Typography style={{ fontSize: "12px", color: "#6E7681" }}>
-                  {`${300 - index * 30}s`}
+    style={{
+      backgroundColor: "#090F19",
+      color: "#E6EDF3",
+      borderRadius: "8px",
+      padding: "16px",
+    }}
+  >
+    <Divider style={{ backgroundColor: "#090F19", marginBottom: "16px" }} />
+  
+    <Box display="flex" flexDirection="column" gap="16px">
+      {getBoardData.map((item, index) => (
+        <Box key={item.id} display="flex" gap="12px" alignItems="flex-start">
+          <Avatar src={item.user?.avatar || ""} alt={item.user?.name} style={{ width: 48, height: 48 }} />
+          <Box flex={1}>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              <Box>
+                <Typography style={{ fontWeight: "bold", color: "#FFF" }}>
+                  {item.user?.name}
+                </Typography>
+                <Typography style={{ fontSize: "14px", color: "#8B949E" }}>
+                  {item.user?.email ? item.user.email : "No email provided"}
                 </Typography>
               </Box>
-              <Typography style={{ marginTop: "4px", color: "#E6EDF3" }}>
-                {item?.text}
+              <Typography style={{ fontSize: "12px", color: "#6E7681" }}>
+                {`${300 - index * 30}s`}
               </Typography>
             </Box>
+            <Typography style={{ marginTop: "4px", color: "#E6EDF3" }}>
+              {item?.text}
+            </Typography>
           </Box>
-        ))}
-      </Box>
+        </Box>
+      ))}
     </Box>
+  </Box>
+  
   );
 };
 

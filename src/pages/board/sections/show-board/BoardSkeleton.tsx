@@ -4,7 +4,7 @@ const InfoSkeleton = () => {
   return (
     <Box
       style={{
-        backgroundColor: "#0D1117",
+        backgroundColor: "#090F19",
         borderRadius: "8px",
         padding: "16px",
         display: "flex",
