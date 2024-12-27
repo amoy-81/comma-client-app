@@ -19,6 +19,7 @@ export const useGetReadNotif = () => {
   };
 };
 
+
 export const useGetUnreadNotif = () => {
   const { getUnreadNotifAction } = useNotifAction();
 
@@ -35,6 +36,7 @@ export const useGetUnreadNotif = () => {
     getUnreadNotifLoading: isLoading,
   };
 };
+
 
 export const useGetUnreadCountNotif = () => {
   const { getUnreadCountNotifAction } = useNotifAction();
