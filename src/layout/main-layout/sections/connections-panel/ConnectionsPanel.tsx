@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import Logo from "../../../../assets/svg/logo.svg";
 import { useTranslation } from "react-i18next";
 import ProfileCard from "./components/profile-card/ProfileCard";
+import CommentBoard from "./components/CommentBoard";
 
 const ConnectionsPanel = () => {
   const { t } = useTranslation();
@@ -19,8 +20,8 @@ const ConnectionsPanel = () => {
       </Box>
 
       {/* Board Section  */}
-      <Box className="w-full h-[70vh] bg-secondary-900 border border-solid border-secondary-800 rounded-3xl">
-        <Typography>Board</Typography>
+      <Box>
+        <CommentBoard />
       </Box>
 
       {/* Profile Card Section */}
