@@ -1,14 +1,18 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { BoardKeys } from "./board.keys";
 import useBoardAction from "./board.actions";
 import { AddBoardRequest, GetBoardParams } from "./board.type";
 
 export const useBoardComment = () => {
+  const queryClient = useQueryClient();
   const { addBoardAction } = useBoardAction();
 
   const { mutate, isPending, isSuccess, data } = useMutation({
     mutationKey: [BoardKeys.add],
     mutationFn: (data: AddBoardRequest) => addBoardAction(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [BoardKeys.get] });
+    },
   });
 
   return {
@@ -22,7 +26,7 @@ export const useBoardComment = () => {
 export const useGetBoard = (params: GetBoardParams) => {
   const { getBoardAction } = useBoardAction();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: [BoardKeys.get, params.page, params.pageSize],
     queryFn: () => getBoardAction(params),
     staleTime: 0,
@@ -33,5 +37,6 @@ export const useGetBoard = (params: GetBoardParams) => {
   return {
     getBoardData: data,
     getBoardLoading: isLoading,
+    refetch,
   };
 };
