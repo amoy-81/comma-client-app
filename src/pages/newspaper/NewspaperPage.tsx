@@ -1,18 +1,26 @@
 import { Box, Button, Skeleton, Typography } from "@mui/material";
-import { useGetTodayNewsPapers } from "../../api/newspaper/newspaper.querys";
+import {
+  useCreateNewsPaper,
+  useGetTodayNewsPapers,
+} from "../../api/newspaper/newspaper.querys";
 import NewsPaperCard from "./components/newspaper-card/NewsPaperCard";
 import { mergeClasses } from "../../utils/merge-classess.util";
 import { t } from "i18next";
 import { useEffect, useState } from "react";
 import useInfiniteScroll from "../../hooks/use-infinite-scroll.hook";
 import EmptyIlust from "../../assets/svg/empty.svg";
+import { useNavigate } from "react-router-dom";
 
 const NewspaperPage = () => {
+  const navigate = useNavigate();
   const skeletonArray = Array.from({ length: 4 });
   const [pageNumber, setPageNumber] = useState(1);
 
   const { getTodayNewsPapersData, getTodayNewsPapersLoading } =
     useGetTodayNewsPapers({ page: pageNumber, pageSize: 20 });
+
+  const { createNewsPaperMutate, createNewsPaperIsPending } =
+    useCreateNewsPaper();
 
   const { setLastItem, data, page } = useInfiniteScroll(
     getTodayNewsPapersData?.data
@@ -21,6 +29,14 @@ const NewspaperPage = () => {
   useEffect(() => {
     setPageNumber(page);
   }, [page]);
+
+  const handleWritingNewspaper = () => {
+    createNewsPaperMutate(undefined, {
+      onSuccess: (res) => {
+        navigate(`/newspaper/edit?newspaperId=${res.news_paper_id}`);
+      },
+    });
+  };
 
   return (
     <>
@@ -36,8 +52,12 @@ const NewspaperPage = () => {
                 <Button
                   variant="contained"
                   className="w-full !rounded-3xl truncate px-4"
+                  disabled={createNewsPaperIsPending}
+                  onClick={handleWritingNewspaper}
                 >
-                  {t("Writing my newspaper")}
+                  {createNewsPaperIsPending
+                    ? t("pleaseWait")
+                    : t("Writing my newspaper")}
                 </Button>
                 <NewsPaperCard {...newspaper} />
               </Box>
@@ -97,8 +117,12 @@ const NewspaperPage = () => {
           <Button
             variant="contained"
             className="!rounded-3xl truncate !px-4 !mt-8"
+            disabled={createNewsPaperIsPending}
+            onClick={handleWritingNewspaper}
           >
-            {t("Writing my newspaper")}
+            {createNewsPaperIsPending
+              ? t("pleaseWait")
+              : t("Writing my newspaper")}
           </Button>
         </Box>
       )}
