@@ -58,5 +58,9 @@
   "Writing my newspaper": "Writing newspaper",
   "newspaper is empty": "There is no newspaper for today, you can design your newspaper tomorrow.",
   "preview": "Preview",
-  "addSection": "Add Section"
+  "addSection": "Add Section",
+  "TopNewsCard": "Top News Card",
+  "NewsSummarySection": "News Summary Section",
+  "FullArticleSection": "Full Article Section",
+  "HeaderBanner": "Header Banner"
 }

@@ -3,7 +3,7 @@ import { useGetOneNewsPaper } from "../../../../api/newspaper/newspaper.querys";
 import { useEffect, useState } from "react";
 import { Box, Button } from "@mui/material";
 import { t } from "i18next";
-import Modal from "../../../../components/modal/Modal";
+import NewspaperSectionForm from "./components/newspaper-section-form/NewspaperSectionForm";
 
 const NewspaperEditPage = () => {
   const navigate = useNavigate();
@@ -46,9 +46,10 @@ const NewspaperEditPage = () => {
         </Button>
       </Box>
 
-      <Modal open={showAddSection} onClose={handleCloseAddSectionModal}>
-        Hiii
-      </Modal>
+      <NewspaperSectionForm
+        open={showAddSection}
+        onClose={handleCloseAddSectionModal}
+      />
     </>
   );
 };

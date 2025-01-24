@@ -27,6 +27,40 @@ const theme = createTheme({
         },
       },
     },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          color: "#fff",
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#fff",
+          },
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#fff",
+          },
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#fff",
+          },
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#fff",
+          color: "#000",
+          "&:hover": {
+            backgroundColor: "#f0f0f0",
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: "#fff",
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {

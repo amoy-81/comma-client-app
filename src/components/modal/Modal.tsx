@@ -29,8 +29,7 @@ const Modal: FC<ModalProps> = ({ open, onClose, children }) => {
             <Clear />
           </Box>
         </Box>
-
-        {children}
+        <Box className="w-full h-full mt-4">{children}</Box>
       </motion.div>
     </MUIModal>
   );
