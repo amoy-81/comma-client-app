@@ -2,51 +2,55 @@ import { FC } from "react";
 import Modal from "../../../../../../components/modal/Modal";
 import Select from "../../../../../../components/select/Select";
 import { t } from "i18next";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-
-type NewspaperSectionFormProps = {
-  open: boolean;
-  onClose: () => void;
-};
-
-const validationSchema = yup.object({
-  sectionType: yup.string().required(t("SectionTypeIsRequired")),
-});
-
-type FormValues = {
-  sectionType: string;
-};
-
-const sectionTypes = [
-  { label: t("TopNewsCard"), value: "TopNewsCard" },
-  { label: t("NewsSummarySection"), value: "NewsSummarySection" },
-  { label: t("FullArticleSection"), value: "FullArticleSection" },
-  { label: t("HeaderBanner"), value: "HeaderBanner" },
-];
+import { SectionTypes } from "./constants/newspaper-section-form.constants";
+import {
+  newspaperSectionFormSchema,
+  NewspaperSectionFormSchemaType,
+} from "./schemas/newspaper-section-form.schema";
+import { renderNewspaperSectionForm } from "./helper/newspaper-section-form.helper";
+import {
+  NewspaperSectionFormProps,
+  NewspaperSectionFormType,
+} from "./@types/newspaper-section-form.type";
+import { Box, Button } from "@mui/material";
 
 const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
   open,
   onClose,
 }) => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>({
-    resolver: yupResolver(validationSchema),
+  const methods = useForm<NewspaperSectionFormSchemaType>({
+    resolver: yupResolver(newspaperSectionFormSchema),
     defaultValues: {
-      sectionType: "",
+      type: NewspaperSectionFormType.FullArticleSection,
     },
   });
 
+  const { watch, setValue } = methods;
+
+  const typeState = watch("type");
+
   const handleChangeSectionType = (value: string | number) => {
-    console.log(value);
+    setValue("type", value as NewspaperSectionFormType);
   };
+
   return (
     <Modal open={open} onClose={onClose}>
-      <Select options={sectionTypes} onChange={handleChangeSectionType} />
+      <FormProvider {...methods}>
+        <Select
+          label={t("Section")}
+          value={typeState}
+          options={SectionTypes}
+          onChange={handleChangeSectionType}
+        />
+        <Box className="mt-2">{renderNewspaperSectionForm(typeState)}</Box>
+
+        <Box className="flex items-center gap-2 w-full justify-center">
+          <Button>{t("cancel")}</Button>
+          <Button variant="contained"> {t("submit")}</Button>
+        </Box>
+      </FormProvider>
     </Modal>
   );
 };
