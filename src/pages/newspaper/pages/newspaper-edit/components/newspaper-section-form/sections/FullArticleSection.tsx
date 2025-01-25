@@ -1,9 +1,18 @@
-import React from 'react'
+import TextInput from "../../../../../../../components/text-input/TextInput";
 
-function FullArticleSection() {
+const FullArticleSection = () => {
   return (
-    <div>FullArticleSection</div>
-  )
-}
+    <>
+      <TextInput label={"Title"} name="title[0]" variant="outlined" />
+      <TextInput
+        label={"Paragraph"}
+        name="paragraph[0]"
+        variant="outlined"
+        multiline
+        minRows={4}
+      />
+    </>
+  );
+};
 
-export default FullArticleSection
+export default FullArticleSection;

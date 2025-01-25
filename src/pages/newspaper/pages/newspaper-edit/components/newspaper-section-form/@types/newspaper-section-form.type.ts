@@ -8,4 +8,11 @@ export enum NewspaperSectionFormType {
 export type NewspaperSectionFormProps = {
   open: boolean;
   onClose: () => void;
+  newsPaperId: number;
+  onSuccess?: () => void;
+};
+
+export type SectionFileProps = {
+  file: File | null;
+  setFile: (file: File | null) => void;
 };

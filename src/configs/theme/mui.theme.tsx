@@ -24,6 +24,25 @@ const theme = createTheme({
             fontSize: "14px",
             color: "#fff",
           },
+          borderColor: "#fff",
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#fff", // رنگ پیش‌فرض بوردر
+          },
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#fff", // رنگ بوردر هنگام هاور
+          },
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#fff", // رنگ بوردر هنگام فوکوس
+          },
+        },
+        input: {
+          color: "#fff", // رنگ متن درون فیلد
         },
       },
     },

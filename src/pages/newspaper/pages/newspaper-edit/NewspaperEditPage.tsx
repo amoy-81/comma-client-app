@@ -14,14 +14,21 @@ const NewspaperEditPage = () => {
 
   const [showAddSection, setShowAddSection] = useState(false);
 
-  const { getOneNewsPapersData, getOneNewsPapersLoading } =
-    useGetOneNewsPaper(id);
+  const {
+    getOneNewsPapersData,
+    getOneNewsPapersIsPending,
+    getOneNewsPapersRefetch,
+  } = useGetOneNewsPaper(id);
 
   useEffect(() => {
     if (getOneNewsPapersData && !getOneNewsPapersData.id) {
       navigate("/newspaper");
     }
   }, [getOneNewsPapersData]);
+
+  const handleAddSectionOnSuccess = () => {
+    getOneNewsPapersRefetch();
+  };
 
   const handleShowAddSectionModal = () => {
     setShowAddSection(true);
@@ -46,9 +53,17 @@ const NewspaperEditPage = () => {
         </Button>
       </Box>
 
+      {getOneNewsPapersIsPending && <p>Loading...</p>}
+
+      {getOneNewsPapersData?.sections.map((item) => (
+        <p>{item.id}</p>
+      ))}
+
       <NewspaperSectionForm
         open={showAddSection}
         onClose={handleCloseAddSectionModal}
+        newsPaperId={id}
+        onSuccess={handleAddSectionOnSuccess}
       />
     </>
   );

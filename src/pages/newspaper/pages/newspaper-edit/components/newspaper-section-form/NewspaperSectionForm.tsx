@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import Modal from "../../../../../../components/modal/Modal";
 import Select from "../../../../../../components/select/Select";
 import { t } from "i18next";
@@ -14,41 +14,87 @@ import {
   NewspaperSectionFormProps,
   NewspaperSectionFormType,
 } from "./@types/newspaper-section-form.type";
-import { Box, Button } from "@mui/material";
+import { Box, Button, CircularProgress } from "@mui/material";
+import { useNewsPaperAddSection } from "../../../../../../api/newspaper/newspaper.querys";
+
+const needFileSection = [
+  NewspaperSectionFormType.HeaderBanner,
+  NewspaperSectionFormType.TopNewsCard,
+];
 
 const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
   open,
   onClose,
+  newsPaperId,
+  onSuccess,
 }) => {
+  const { NewsPaperAddSectionMutate, NewsPaperAddSectionIsPending } =
+    useNewsPaperAddSection();
+
+  const [file, setFile] = useState<File | null>(null);
   const methods = useForm<NewspaperSectionFormSchemaType>({
     resolver: yupResolver(newspaperSectionFormSchema),
     defaultValues: {
       type: NewspaperSectionFormType.FullArticleSection,
+      order: 10,
     },
   });
 
-  const { watch, setValue } = methods;
+  const { watch, setValue, handleSubmit, reset } = methods;
 
   const typeState = watch("type");
+
+  useEffect(() => {
+    const newTypeState = typeState;
+    reset({ type: newTypeState, order: 10 });
+  }, [typeState]);
 
   const handleChangeSectionType = (value: string | number) => {
     setValue("type", value as NewspaperSectionFormType);
   };
 
+  const handleSubmitSection = handleSubmit((data) => {
+    const resultData = {
+      ...data,
+      newsPaperId,
+      ...(file ? { image: file } : {}),
+    };
+
+    NewsPaperAddSectionMutate(resultData, {
+      onSuccess: () => {
+        onSuccess?.();
+        onClose();
+      },
+    });
+  });
+
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} className="relative">
       <FormProvider {...methods}>
+        {NewsPaperAddSectionIsPending && (
+          <Box className="absolute w-full h-full top-0 left-0 backdrop-blur-sm flex justify-center items-center z-10">
+            <CircularProgress />
+          </Box>
+        )}
+
         <Select
           label={t("Section")}
           value={typeState}
           options={SectionTypes}
           onChange={handleChangeSectionType}
         />
-        <Box className="mt-2">{renderNewspaperSectionForm(typeState)}</Box>
+        <Box className="my-2">
+          {renderNewspaperSectionForm(
+            typeState,
+            needFileSection.includes(typeState) ? { file, setFile } : undefined
+          )}
+        </Box>
 
         <Box className="flex items-center gap-2 w-full justify-center">
-          <Button>{t("cancel")}</Button>
-          <Button variant="contained"> {t("submit")}</Button>
+          <Button onClick={() => onClose()}>{t("cancel")}</Button>
+          <Button variant="contained" onClick={handleSubmitSection}>
+            {t("submit")}
+          </Button>
         </Box>
       </FormProvider>
     </Modal>
