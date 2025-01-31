@@ -15,7 +15,10 @@ import {
   NewspaperSectionFormType,
 } from "./@types/newspaper-section-form.type";
 import { Box, Button, CircularProgress } from "@mui/material";
-import { useNewsPaperAddSection } from "../../../../../../api/newspaper/newspaper.querys";
+import {
+  useNewsPaperAddSection,
+  useNewsPaperEditSection,
+} from "../../../../../../api/newspaper/newspaper.querys";
 
 const needFileSection = [
   NewspaperSectionFormType.HeaderBanner,
@@ -27,9 +30,14 @@ const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
   onClose,
   newsPaperId,
   onSuccess,
+  sectionDefaultValue,
+  resetDefaultValue,
 }) => {
   const { NewsPaperAddSectionMutate, NewsPaperAddSectionIsPending } =
     useNewsPaperAddSection();
+
+  const { NewsPaperEditSectionMutate, NewsPaperEditSectionIsPending } =
+    useNewsPaperEditSection();
 
   const [file, setFile] = useState<File | null>(null);
   const methods = useForm<NewspaperSectionFormSchemaType>({
@@ -49,16 +57,39 @@ const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
     reset({ type: newTypeState, order: 10 });
   }, [typeState]);
 
+  useEffect(() => {
+    if (sectionDefaultValue) {
+      const { type, title, paragraph, order } = sectionDefaultValue;
+      reset({
+        type: type as NewspaperSectionFormType,
+        title,
+        paragraph,
+        order,
+      });
+    }
+  }, [sectionDefaultValue]);
+
   const handleChangeSectionType = (value: string | number) => {
     setValue("type", value as NewspaperSectionFormType);
   };
 
-  const handleSubmitSection = handleSubmit((data) => {
+  const handleSubmitSection = handleSubmit((data: any) => {
     const resultData = {
       ...data,
       newsPaperId,
+      ...(sectionDefaultValue ? { sectionId: sectionDefaultValue.id } : {}),
       ...(file ? { image: file } : {}),
     };
+
+    if (sectionDefaultValue) {
+      return NewsPaperEditSectionMutate(resultData, {
+        onSuccess: () => {
+          onSuccess?.();
+          resetDefaultValue?.();
+          onClose();
+        },
+      });
+    }
 
     NewsPaperAddSectionMutate(resultData, {
       onSuccess: () => {
@@ -71,7 +102,7 @@ const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
   return (
     <Modal open={open} onClose={onClose} className="relative">
       <FormProvider {...methods}>
-        {NewsPaperAddSectionIsPending && (
+        {(NewsPaperAddSectionIsPending || NewsPaperEditSectionIsPending) && (
           <Box className="absolute w-full h-full top-0 left-0 backdrop-blur-sm flex justify-center items-center z-10">
             <CircularProgress />
           </Box>

@@ -1,9 +1,11 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useGetOneNewsPaper } from "../../../../api/newspaper/newspaper.querys";
 import { useEffect, useState } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { t } from "i18next";
 import NewspaperSectionForm from "./components/newspaper-section-form/NewspaperSectionForm";
+import { Edit } from "@mui/icons-material";
+import { NewspaperSection } from "../../../../api/newspaper/newspaper.type";
 
 const NewspaperEditPage = () => {
   const navigate = useNavigate();
@@ -13,6 +15,8 @@ const NewspaperEditPage = () => {
   const id = parseInt(newspaperId || "");
 
   const [showAddSection, setShowAddSection] = useState(false);
+  const [selectedEditSection, setSelectedEditSection] =
+    useState<NewspaperSection | null>(null);
 
   const {
     getOneNewsPapersData,
@@ -26,11 +30,17 @@ const NewspaperEditPage = () => {
     }
   }, [getOneNewsPapersData]);
 
+  const handleOpenEditSection = (item: NewspaperSection) => {
+    setSelectedEditSection(item);
+    setShowAddSection(true);
+  };
+
   const handleAddSectionOnSuccess = () => {
     getOneNewsPapersRefetch();
   };
 
   const handleShowAddSectionModal = () => {
+    setSelectedEditSection(null);
     setShowAddSection(true);
   };
 
@@ -55,15 +65,25 @@ const NewspaperEditPage = () => {
 
       {getOneNewsPapersIsPending && <p>Loading...</p>}
 
-      {getOneNewsPapersData?.sections.map((item) => (
-        <p>{item.id}</p>
-      ))}
+      <Box className="flex flex-col gap-4 mt-4">
+        {getOneNewsPapersData?.sections.map((item) => (
+          <Box
+            onClick={() => handleOpenEditSection(item)}
+            className="bg-secondary-600 p-2 rounded-md flex justify-between items-center cursor-pointer hover:bg-primary-500"
+          >
+            <Typography>{item.type}</Typography>
+            <Edit />
+          </Box>
+        ))}
+      </Box>
 
       <NewspaperSectionForm
+        newsPaperId={id}
         open={showAddSection}
         onClose={handleCloseAddSectionModal}
-        newsPaperId={id}
         onSuccess={handleAddSectionOnSuccess}
+        sectionDefaultValue={selectedEditSection}
+        resetDefaultValue={() => setSelectedEditSection(null)}
       />
     </>
   );

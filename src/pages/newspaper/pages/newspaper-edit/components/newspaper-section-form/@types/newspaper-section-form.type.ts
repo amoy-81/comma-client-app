@@ -1,3 +1,5 @@
+import { NewspaperSection } from "../../../../../../../api/newspaper/newspaper.type";
+
 export enum NewspaperSectionFormType {
   "TopNewsCard" = "TopNewsCard",
   "NewsSummarySection" = "NewsSummarySection",
@@ -10,6 +12,8 @@ export type NewspaperSectionFormProps = {
   onClose: () => void;
   newsPaperId: number;
   onSuccess?: () => void;
+  sectionDefaultValue?: NewspaperSection | null;
+  resetDefaultValue?: () => void;
 };
 
 export type SectionFileProps = {
