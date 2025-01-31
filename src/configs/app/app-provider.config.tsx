@@ -1,4 +1,4 @@
-import { Button, CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { FC, ReactNode, useEffect, useMemo } from "react";
 import theme, { fonts } from "../theme/mui.theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -22,7 +22,7 @@ const ltrCache = createCache({
 });
 
 const AppProvider: FC<AppProviderProps> = ({ children }) => {
-  const { lang, setLang } = useLanguageStore();
+  const { lang } = useLanguageStore();
   const { i18n } = useTranslation();
 
   const queryClient = new QueryClient();
@@ -52,9 +52,6 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
         <CssBaseline />
         <Toaster />
         <QueryClientProvider client={queryClient}>
-          <Button onClick={() => setLang(lang === "en" ? "fa" : "en")}>
-            change lang
-          </Button>
           {children}
         </QueryClientProvider>
       </ThemeProvider>
