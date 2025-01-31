@@ -6,9 +6,9 @@ interface TopPostProps {
   author: string;
   email: string;
   userAvatarUrl: string;
-  backgroundImageUrl?: string; 
-  postId: string; 
-  userId: string; 
+  backgroundImageUrl?: string;
+  postId: string;
+  userId: string;
 }
 
 const TopPost: FC<TopPostProps> = ({
@@ -27,16 +27,17 @@ const TopPost: FC<TopPostProps> = ({
   };
 
   const handleNavigateProfile = (event: React.MouseEvent) => {
-    event.stopPropagation(); 
+    event.stopPropagation();
     navigate(`/profile?user=${userId}`);
   };
 
-  const finalBackgroundImage = backgroundImageUrl || userAvatarUrl || "https://via.placeholder.com/150";
+  const finalBackgroundImage =
+    backgroundImageUrl || userAvatarUrl || "https://via.placeholder.com/150";
 
   return (
     <div
       onClick={handleNavigatePost}
-      className="top-post-card bg-primary-800 rounded-xl p-6 shadow-lg relative overflow-hidden col-span-1 row-span-2 cursor-pointer"
+      className="top-post-card bg-secondary-900 rounded-xl p-6 shadow-lg relative overflow-hidden col-span-1 row-span-2 cursor-pointer"
     >
       <div
         className="absolute inset-0 bg-cover bg-center opacity-25 rounded-xl"
@@ -48,9 +49,10 @@ const TopPost: FC<TopPostProps> = ({
           src={userAvatarUrl}
           alt="User Avatar"
           className="w-12 h-12 rounded-full cursor-pointer"
-          onClick={handleNavigateProfile} 
+          onClick={handleNavigateProfile}
           onError={(e) => {
-            (e.target as HTMLImageElement).src = "https://via.placeholder.com/150";
+            (e.target as HTMLImageElement).src =
+              "https://via.placeholder.com/150";
           }}
         />
         <h3 className="text-white font-extrabold text-lg">{author}</h3>

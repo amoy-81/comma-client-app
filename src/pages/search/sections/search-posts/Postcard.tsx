@@ -35,7 +35,7 @@ const PostCard: FC<PostCardProps> = ({
   return (
     <div
       onClick={handleNavigatePost} 
-      className="post-card bg-primary-900 rounded-xl p-4 shadow-lg relative overflow-hidden w-80/2 h-36 cursor-pointer"
+      className="post-card bg-secondary-900 rounded-xl p-4 shadow-lg relative overflow-hidden w-80/2 h-36 cursor-pointer"
     >
       <div
         className="absolute inset-0 bg-cover bg-center opacity-20 rounded-xl"
