@@ -8,6 +8,7 @@ import { detectDirection } from "../../../../utils/detect-direction.util";
 import { UserRoles } from "../../../../api/user/user.type";
 
 const NewsPaperCard: FC<NewsPaperCardProps> = ({
+  id,
   user,
   title,
   description,
@@ -15,8 +16,17 @@ const NewsPaperCard: FC<NewsPaperCardProps> = ({
   views,
 }) => {
   const [imageIsLoaded, setImageIsLoaded] = useState(false);
+
+  const handleNavigateViewNewspaper = () => {
+    const url = `/newspaper/view?newspaperId=${id}`;
+    window.open(url, "_blank");
+  };
+
   return (
-    <Box className="relative h-full rounded-3xl overflow-hidden bg-secondary-600 hover:-translate-y-1 transition border-0 hover:border-[1px] border-solid border-primary-600 shadow ">
+    <Box
+      onClick={handleNavigateViewNewspaper}
+      className="relative h-full rounded-3xl overflow-hidden bg-secondary-600 hover:-translate-y-1 transition border-0 hover:border-[1px] border-solid border-primary-600 shadow "
+    >
       {!imageIsLoaded && (
         <Box className="w-full h-full absolute top-0 left-0 z-[3] flash-effect" />
       )}
