@@ -22,7 +22,7 @@ const NewspaperViewPage = () => {
   return (
     <Container maxWidth="md" className="flex flex-col gap-8">
       {/* Header */}
-      <Box>
+      <Box className='mt-8'>
         <Box>
           <Typography className="flex gap-1 !text-2xl">
             <Box component={"span"} className="text-primary-600 font-extrabold">
