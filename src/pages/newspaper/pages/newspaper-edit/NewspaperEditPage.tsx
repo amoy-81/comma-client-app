@@ -6,6 +6,7 @@ import { t } from "i18next";
 import NewspaperSectionForm from "./components/newspaper-section-form/NewspaperSectionForm";
 import { Edit } from "@mui/icons-material";
 import { NewspaperSection } from "../../../../api/newspaper/newspaper.type";
+import EmptyIllastation from "../../../../assets/svg/empty-2.svg";
 
 const NewspaperEditPage = () => {
   const navigate = useNavigate();
@@ -76,6 +77,12 @@ const NewspaperEditPage = () => {
           </Box>
         ))}
       </Box>
+
+      {getOneNewsPapersData?.sections.length === 0 && (
+        <Box className="w-full flex justify-center items-center p-6">
+          <img src={EmptyIllastation} alt="empty" />
+        </Box>
+      )}
 
       <NewspaperSectionForm
         newsPaperId={id}
