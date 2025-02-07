@@ -11,6 +11,7 @@ import NewspaperPage from "../pages/newspaper/NewspaperPage";
 import PostPage from "../pages/post/PostPage";
 import NotifPage from "../pages/notif/NotifPage";
 import NewspaperEditPage from "../pages/newspaper/pages/newspaper-edit/NewspaperEditPage";
+import NewspaperViewPage from "../pages/newspaper/pages/newspaper-view/NewspaperViewPage";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       { path: "notif", element: <NotifPage /> },
     ],
   },
+  { path: "newspaper/view", element: <NewspaperViewPage /> },
   {
     path: "/auth",
     element: (

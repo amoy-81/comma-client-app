@@ -64,5 +64,6 @@
   "FullArticleSection": "Full Article Section",
   "HeaderBanner": "Header Banner",
   "Section": "Section",
-  "uploadDesc": "Select a File or Drag in this Box"
+  "uploadDesc": "Select a File or Drag in this Box",
+  "news": "News"
 }

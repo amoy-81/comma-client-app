@@ -2,10 +2,17 @@ import { Pagination } from "../@types/pagination.type";
 import { Poster } from "../theme/theme.type";
 import { User } from "../user/user.type";
 
+export enum NewspaperSectionType {
+  TopNewsCard = "TopNewsCard",
+  NewsSummarySection = "NewsSummarySection",
+  FullArticleSection = "FullArticleSection",
+  HeaderBanner = "HeaderBanner",
+}
+
 export type NewspaperSection = {
   id: number;
   newsPaperId: number;
-  type: string;
+  type: NewspaperSectionType;
   title: string[];
   image: string;
   paragraph: string[];
