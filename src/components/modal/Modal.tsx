@@ -30,7 +30,7 @@ const Modal: FC<ModalProps> = ({ open, onClose, children, className }) => {
       >
         {/* Title */}
         <Box className="flex justify-end">
-          <Box onClick={onClose}>
+          <Box className="cursor-pointer" onClick={onClose}>
             <Clear />
           </Box>
         </Box>

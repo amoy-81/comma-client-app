@@ -61,7 +61,7 @@ const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
     if (sectionDefaultValue) {
       const { type, title, paragraph, order } = sectionDefaultValue;
       reset({
-        type: type as NewspaperSectionFormType,
+        type: type as unknown as NewspaperSectionFormType,
         title,
         paragraph,
         order,

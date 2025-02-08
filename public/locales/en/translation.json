@@ -65,5 +65,7 @@
   "HeaderBanner": "Header Banner",
   "Section": "Section",
   "uploadDesc": "Select a File or Drag in this Box",
-  "news": "News"
+  "news": "News",
+  "title": "Title",
+  "desc": "description"
 }

@@ -27,6 +27,7 @@ const TextInput: FC<TextInputProps> = ({
           helperText={error ? error.message : ""}
           fullWidth
           margin="normal"
+          InputLabelProps={{ shrink: true }}
           sx={{
             borderColor: "#fff",
           }}

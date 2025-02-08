@@ -7,6 +7,9 @@ import NewspaperSectionForm from "./components/newspaper-section-form/NewspaperS
 import { Edit } from "@mui/icons-material";
 import { NewspaperSection } from "../../../../api/newspaper/newspaper.type";
 import EmptyIllastation from "../../../../assets/svg/empty-2.svg";
+import Modal from "../../../../components/modal/Modal";
+import NewspaperViewPage from "../newspaper-view/NewspaperViewPage";
+import NewspaperEditInfo from "./components/newspaper-edit-info/NewspaperEditInfo";
 
 const NewspaperEditPage = () => {
   const navigate = useNavigate();
@@ -15,7 +18,9 @@ const NewspaperEditPage = () => {
   const newspaperId = searchParams.get("newspaperId");
   const id = parseInt(newspaperId || "");
 
+  const [showPreview, setShowPreview] = useState(false);
   const [showAddSection, setShowAddSection] = useState(false);
+  const [showEditInfo, setShowEditInfo] = useState(false);
   const [selectedEditSection, setSelectedEditSection] =
     useState<NewspaperSection | null>(null);
 
@@ -49,19 +54,49 @@ const NewspaperEditPage = () => {
     setShowAddSection(false);
   };
 
+  const handleShowPreviewModal = () => {
+    setShowPreview(true);
+  };
+
+  const handleClosePreviewModal = () => {
+    setShowPreview(false);
+  };
+
+  const handleShowEditSectionModal = () => {
+    setShowEditInfo(true);
+  };
+
+  const handleCloseEditSectionModal = () => {
+    setShowEditInfo(false);
+  };
+
   return (
     <>
       <Box className="flex w-full justify-between items-center">
-        <Button variant="contained" size="small">
-          {t("preview")}
-        </Button>
         <Button
           variant="contained"
           size="small"
-          onClick={handleShowAddSectionModal}
+          onClick={handleShowPreviewModal}
         >
-          {t("addSection")}
+          {t("preview")}
         </Button>
+
+        <Box className="flex items-center gap-2">
+          <Button
+            variant="contained"
+            size="small"
+            onClick={handleShowEditSectionModal}
+          >
+            {t("editInfo")}
+          </Button>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={handleShowAddSectionModal}
+          >
+            {t("addSection")}
+          </Button>
+        </Box>
       </Box>
 
       {getOneNewsPapersIsPending && <p>Loading...</p>}
@@ -91,6 +126,15 @@ const NewspaperEditPage = () => {
         onSuccess={handleAddSectionOnSuccess}
         sectionDefaultValue={selectedEditSection}
         resetDefaultValue={() => setSelectedEditSection(null)}
+      />
+
+      <Modal open={showPreview} onClose={handleClosePreviewModal}>
+        <NewspaperViewPage />
+      </Modal>
+
+      <NewspaperEditInfo
+        open={showEditInfo}
+        onClose={handleCloseEditSectionModal}
       />
     </>
   );
