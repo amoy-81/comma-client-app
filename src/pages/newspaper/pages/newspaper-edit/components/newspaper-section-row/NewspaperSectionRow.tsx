@@ -32,7 +32,7 @@ const NewspaperSectionRow: FC<NewspaperSectionRowProps> = ({
   }, 500);
 
   return (
-    <Box className="bg-secondary-600 p-2 rounded-md flex justify-between items-center cursor-pointer hover:bg-primary-500">
+    <Box className="bg-secondary-600 p-2 rounded-md flex justify-between items-center">
       <Typography>{type}</Typography>
 
       <Box className="flex items-center gap-2">
