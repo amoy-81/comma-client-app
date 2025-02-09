@@ -1,15 +1,16 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useGetOneNewsPaper } from "../../../../api/newspaper/newspaper.querys";
 import { useEffect, useState } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { t } from "i18next";
 import NewspaperSectionForm from "./components/newspaper-section-form/NewspaperSectionForm";
-import { Edit } from "@mui/icons-material";
 import { NewspaperSection } from "../../../../api/newspaper/newspaper.type";
 import EmptyIllastation from "../../../../assets/svg/empty-2.svg";
 import Modal from "../../../../components/modal/Modal";
 import NewspaperViewPage from "../newspaper-view/NewspaperViewPage";
 import NewspaperEditInfo from "./components/newspaper-edit-info/NewspaperEditInfo";
+import NewspaperSectionRow from "./components/newspaper-section-row/NewspaperSectionRow";
+import SuspansLoader from "../../../../components/suspans-loader/SuspansLoader";
 
 const NewspaperEditPage = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const NewspaperEditPage = () => {
     getOneNewsPapersData,
     getOneNewsPapersIsPending,
     getOneNewsPapersRefetch,
+    getOneNewsPapersIsFetching,
   } = useGetOneNewsPaper(id);
 
   useEffect(() => {
@@ -35,6 +37,10 @@ const NewspaperEditPage = () => {
       navigate("/newspaper");
     }
   }, [getOneNewsPapersData]);
+
+  const sectionsList = getOneNewsPapersData?.sections.sort(
+    (a, b) => b.order - a.order
+  );
 
   const handleOpenEditSection = (item: NewspaperSection) => {
     setSelectedEditSection(item);
@@ -73,13 +79,16 @@ const NewspaperEditPage = () => {
   return (
     <>
       <Box className="flex w-full justify-between items-center">
-        <Button
-          variant="contained"
-          size="small"
-          onClick={handleShowPreviewModal}
-        >
-          {t("preview")}
-        </Button>
+        <Box className="flex items-center gap-2">
+          <Button
+            variant="contained"
+            size="small"
+            onClick={handleShowPreviewModal}
+          >
+            {t("preview")}
+          </Button>
+          {getOneNewsPapersIsFetching && <h1>Updating...</h1>}
+        </Box>
 
         <Box className="flex items-center gap-2">
           <Button
@@ -99,18 +108,18 @@ const NewspaperEditPage = () => {
         </Box>
       </Box>
 
-      {getOneNewsPapersIsPending && <p>Loading...</p>}
+      {getOneNewsPapersIsPending && <SuspansLoader />}
 
       <Box className="flex flex-col gap-4 mt-4">
-        {getOneNewsPapersData?.sections.map((item) => (
-          <Box
-            onClick={() => handleOpenEditSection(item)}
-            className="bg-secondary-600 p-2 rounded-md flex justify-between items-center cursor-pointer hover:bg-primary-500"
-          >
-            <Typography>{item.type}</Typography>
-            <Edit />
-          </Box>
-        ))}
+        {!getOneNewsPapersIsPending &&
+          sectionsList?.map((item) => (
+            <NewspaperSectionRow
+              key={item.id}
+              {...item}
+              refetchSections={() => getOneNewsPapersRefetch()}
+              onClick={() => handleOpenEditSection(item)}
+            />
+          ))}
       </Box>
 
       {getOneNewsPapersData?.sections.length === 0 && (

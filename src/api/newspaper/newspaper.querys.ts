@@ -25,7 +25,7 @@ export const useGetTodayNewsPapers = (params: GetTodayNewsPapersParams) => {
 
 export const useGetOneNewsPaper = (newsPaperId: number) => {
   const { getOneNewspaperAction } = useNewspaperAction();
-  const { data, isPending, refetch } = useQuery({
+  const { data, isPending, isFetching, refetch } = useQuery({
     queryKey: [NewspaperKeys.getOne, newsPaperId],
     queryFn: () => getOneNewspaperAction(newsPaperId),
   });
@@ -34,6 +34,7 @@ export const useGetOneNewsPaper = (newsPaperId: number) => {
     getOneNewsPapersData: data,
     getOneNewsPapersRefetch: refetch,
     getOneNewsPapersIsPending: isPending,
+    getOneNewsPapersIsFetching: isFetching,
   };
 };
 
