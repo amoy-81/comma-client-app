@@ -11,6 +11,7 @@ const NewspaperSectionRow: FC<NewspaperSectionRowProps> = ({
   type,
   order,
   id,
+  title,
   refetchSections,
 }) => {
   const [orderValue, setOrderValue] = useState(order);
@@ -33,7 +34,12 @@ const NewspaperSectionRow: FC<NewspaperSectionRowProps> = ({
 
   return (
     <Box className="bg-secondary-600 p-2 rounded-md flex justify-between items-center">
-      <Typography>{type}</Typography>
+      <Typography className='flex gap-1'>
+        {type} -{" "}
+        <Box className="text-secondary-500">
+          {title[0] ? `${title[0].substring(0, 6)}...` : ""}
+        </Box>
+      </Typography>
 
       <Box className="flex items-center gap-2">
         <Box className="flex items-center gap-2">

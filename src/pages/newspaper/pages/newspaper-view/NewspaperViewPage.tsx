@@ -19,10 +19,14 @@ const NewspaperViewPage = () => {
 
   if (getOneNewsPapersIsPending) return <SuspansLoader />;
 
+  const sectionsList = getOneNewsPapersData?.sections.sort(
+    (a, b) => b.order - a.order
+  );
+
   return (
     <Container maxWidth="md" className="flex flex-col gap-8">
       {/* Header */}
-      <Box className='mt-8'>
+      <Box className="mt-8">
         <Box>
           <Typography className="flex gap-1 !text-2xl">
             <Box component={"span"} className="text-primary-600 font-extrabold">
@@ -38,7 +42,7 @@ const NewspaperViewPage = () => {
       </Box>
 
       {/* Sections */}
-      {getOneNewsPapersData?.sections.map((section) => (
+      {sectionsList?.map((section) => (
         <>{renderNewspaperSection(section.type, section)}</>
       ))}
 
