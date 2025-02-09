@@ -87,7 +87,7 @@ const NewspaperEditPage = () => {
           >
             {t("preview")}
           </Button>
-          {getOneNewsPapersIsFetching && <h1>Updating...</h1>}
+          {getOneNewsPapersIsFetching && <h1>{t('updating')}...</h1>}
         </Box>
 
         <Box className="flex items-center gap-2">
