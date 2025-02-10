@@ -48,26 +48,53 @@ const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
     },
   });
 
-  const { watch, setValue, handleSubmit, reset } = methods;
+  const {
+    watch,
+    setValue,
+    handleSubmit,
+    reset,
+    clearErrors,
+  } = methods;
 
   const typeState = watch("type");
 
   useEffect(() => {
     const newTypeState = typeState;
-    reset({ type: newTypeState, order: 10 });
+    if (newTypeState !== typeState) reset({ type: newTypeState, order: 10 });
   }, [typeState]);
+
+  useEffect(() => {
+    clearErrors();
+  }, [open]);
+
+  useEffect(() => {
+    clearErrors();
+  }, [open]);
 
   useEffect(() => {
     if (sectionDefaultValue) {
       const { type, title, paragraph, order } = sectionDefaultValue;
+
       reset({
         type: type as unknown as NewspaperSectionFormType,
         title,
         paragraph,
         order,
       });
+
+      setValue("title", title);
+      setValue("paragraph", paragraph);
     }
   }, [sectionDefaultValue]);
+
+  const handleClose = () => {
+    reset({
+      type: NewspaperSectionFormType.FullArticleSection,
+      order: 10,
+    });
+    resetDefaultValue?.();
+    onClose();
+  };
 
   const handleChangeSectionType = (value: string | number) => {
     setValue("type", value as NewspaperSectionFormType);
@@ -86,7 +113,7 @@ const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
         onSuccess: () => {
           onSuccess?.();
           resetDefaultValue?.();
-          onClose();
+          handleClose();
         },
       });
     }
@@ -94,13 +121,14 @@ const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
     NewsPaperAddSectionMutate(resultData, {
       onSuccess: () => {
         onSuccess?.();
-        onClose();
+        resetDefaultValue?.();
+        handleClose();
       },
     });
   });
 
   return (
-    <Modal open={open} onClose={onClose} className="relative">
+    <Modal open={open} onClose={handleClose} className="relative">
       <FormProvider {...methods}>
         {(NewsPaperAddSectionIsPending || NewsPaperEditSectionIsPending) && (
           <Box className="absolute w-full h-full top-0 left-0 backdrop-blur-sm flex justify-center items-center z-10">
@@ -122,7 +150,7 @@ const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
         </Box>
 
         <Box className="flex items-center gap-2 w-full justify-center">
-          <Button onClick={() => onClose()}>{t("cancel")}</Button>
+          <Button onClick={() => handleClose()}>{t("cancel")}</Button>
           <Button variant="contained" onClick={handleSubmitSection}>
             {t("submit")}
           </Button>

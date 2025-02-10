@@ -7,13 +7,13 @@ const FullArticleSectionView: FC<NewspaperSection> = ({ title, paragraph }) => {
   return (
     <Box>
       <Typography
-        className="!text-xl !font-extrabold"
+        className="md:!text-xl !text-[8px] !font-extrabold"
         dir={detectDirection(title[0])}
       >
         {title[0]}
       </Typography>
       <Typography
-        className="!text-sm !font-light"
+        className="md:!text-sm !text-[6px] !font-light"
         dir={detectDirection(paragraph[0])}
       >
         {paragraph[0]}

@@ -32,17 +32,17 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#fff", // رنگ پیش‌فرض بوردر
+            borderColor: "#fff",
           },
           "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#fff", // رنگ بوردر هنگام هاور
+            borderColor: "#fff",
           },
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#fff", // رنگ بوردر هنگام فوکوس
+            borderColor: "#fff",
           },
         },
         input: {
-          color: "#fff", // رنگ متن درون فیلد
+          color: "#fff",
         },
       },
     },
@@ -65,10 +65,16 @@ const theme = createTheme({
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          backgroundColor: "#fff",
-          color: "#000",
+          backgroundColor: "#0E1828",
+          color: "#fff",
           "&:hover": {
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "#15233A",
+          },
+          "&.Mui-selected": {
+            backgroundColor: "#15233A",
+            "&:hover": {
+              backgroundColor: "#15233A",
+            },
           },
         },
       },

@@ -1,4 +1,4 @@
-import { Box, Modal as MUIModal } from "@mui/material";
+import { Box, Modal as MUIModal, useMediaQuery, useTheme } from "@mui/material";
 import { FC, ReactNode } from "react";
 import { motion } from "framer-motion";
 import { Clear } from "@mui/icons-material";
@@ -12,19 +12,22 @@ export type ModalProps = {
 };
 
 const Modal: FC<ModalProps> = ({ open, onClose, children, className }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <MUIModal
       open={open}
       onClose={onClose}
-      className="flex justify-center items-center"
+      className="flex justify-center items-end sm:items-center"
     >
       <motion.div
-        initial={{ opacity: 0, y: -50 }}
+        initial={{ opacity: 0, y: isMobile ? "100%" : -50 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -50 }}
-        transition={{ duration: 0.5 }}
+        exit={{ opacity: 0, y: isMobile ? "100%" : -50 }}
+        transition={{ duration: 0.3 }}
         className={mergeClasses(
-          "w-2/4 max-h-[calc(100%-10%)] overflow-auto bg-secondary-600 p-4 rounded-md",
+          "w-full sm:w-2/4 max-h-[calc(100%-10%)] overflow-auto bg-secondary-600 p-4 rounded-t-lg sm:rounded-md",
           className
         )}
       >
