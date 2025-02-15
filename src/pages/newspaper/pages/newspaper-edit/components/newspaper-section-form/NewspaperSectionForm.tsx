@@ -10,19 +10,17 @@ import {
   NewspaperSectionFormSchemaType,
 } from "./schemas/newspaper-section-form.schema";
 import { renderNewspaperSectionForm } from "./helper/newspaper-section-form.helper";
-import {
-  NewspaperSectionFormProps,
-  NewspaperSectionFormType,
-} from "./@types/newspaper-section-form.type";
+import { NewspaperSectionFormProps } from "./@types/newspaper-section-form.type";
 import { Box, Button, CircularProgress } from "@mui/material";
 import {
   useNewsPaperAddSection,
   useNewsPaperEditSection,
 } from "../../../../../../api/newspaper/newspaper.querys";
+import { NewspaperSectionType } from "../../../../../../api/newspaper/newspaper.type";
 
 const needFileSection = [
-  NewspaperSectionFormType.HeaderBanner,
-  NewspaperSectionFormType.TopNewsCard,
+  NewspaperSectionType.HeaderBanner,
+  NewspaperSectionType.TopNewsCard,
 ];
 
 const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
@@ -39,28 +37,42 @@ const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
   const { NewsPaperEditSectionMutate, NewsPaperEditSectionIsPending } =
     useNewsPaperEditSection();
 
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File | string | null>(null);
   const methods = useForm<NewspaperSectionFormSchemaType>({
     resolver: yupResolver(newspaperSectionFormSchema),
     defaultValues: {
-      type: NewspaperSectionFormType.FullArticleSection,
+      type: NewspaperSectionType.FullArticleSection,
       order: 10,
+      title: [],
+      paragraph: [],
     },
   });
 
-  const {
-    watch,
-    setValue,
-    handleSubmit,
-    reset,
-    clearErrors,
-  } = methods;
+  const { watch, setValue, handleSubmit, reset, clearErrors } = methods;
+
+  console.log(watch());
 
   const typeState = watch("type");
 
   useEffect(() => {
     const newTypeState = typeState;
-    if (newTypeState !== typeState) reset({ type: newTypeState, order: 10 });
+
+    if (sectionDefaultValue && sectionDefaultValue.type === typeState) return;
+
+    reset({
+      type: newTypeState,
+      order: 10,
+      title:
+        typeState === NewspaperSectionType.HeaderBanner
+          ? ["Header Banner"]
+          : [""],
+      paragraph:
+        typeState === NewspaperSectionType.HeaderBanner
+          ? ["Header Banner"]
+          : [""],
+    });
+    clearErrors();
+    setFile(null);
   }, [typeState]);
 
   useEffect(() => {
@@ -73,10 +85,10 @@ const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
 
   useEffect(() => {
     if (sectionDefaultValue) {
-      const { type, title, paragraph, order } = sectionDefaultValue;
+      const { type, title, paragraph, order, image } = sectionDefaultValue;
 
       reset({
-        type: type as unknown as NewspaperSectionFormType,
+        type: type as unknown as NewspaperSectionType,
         title,
         paragraph,
         order,
@@ -84,12 +96,13 @@ const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
 
       setValue("title", title);
       setValue("paragraph", paragraph);
+      setFile(image);
     }
   }, [sectionDefaultValue]);
 
   const handleClose = () => {
     reset({
-      type: NewspaperSectionFormType.FullArticleSection,
+      type: NewspaperSectionType.FullArticleSection,
       order: 10,
     });
     resetDefaultValue?.();
@@ -97,7 +110,7 @@ const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
   };
 
   const handleChangeSectionType = (value: string | number) => {
-    setValue("type", value as NewspaperSectionFormType);
+    setValue("type", value as NewspaperSectionType);
   };
 
   const handleSubmitSection = handleSubmit((data: any) => {
@@ -141,6 +154,7 @@ const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
           value={typeState}
           options={SectionTypes}
           onChange={handleChangeSectionType}
+          disabled={!!sectionDefaultValue}
         />
         <Box className="my-2">
           {renderNewspaperSectionForm(

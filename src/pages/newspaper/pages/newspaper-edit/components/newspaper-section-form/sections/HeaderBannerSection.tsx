@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { t } from "i18next";
 import { FC } from "react";
 import { SectionFileProps } from "../@types/newspaper-section-form.type";
+import { getImageUrl } from "../../../../../../../utils/get-image-url.util";
 
 const HeaderBannerSection: FC<SectionFileProps> = ({ file, setFile }) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +23,11 @@ const HeaderBannerSection: FC<SectionFileProps> = ({ file, setFile }) => {
         <Box className="flex justify-center w-full">
           <Box className="w-full h-auto relative p-1 overflow-hidden rounded">
             <img
-              src={URL.createObjectURL(file)}
+              src={
+                typeof file === "string"
+                  ? getImageUrl(file)
+                  : URL.createObjectURL(file)
+              }
               alt="Banner Preview"
               className="w-full"
             />

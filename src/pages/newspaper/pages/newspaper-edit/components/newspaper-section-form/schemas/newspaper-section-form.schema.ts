@@ -1,22 +1,16 @@
 import { t } from "i18next";
 import * as yup from "yup";
-import { NewspaperSectionFormType } from "../@types/newspaper-section-form.type";
-
-const { FullArticleSection, NewsSummarySection, TopNewsCard, HeaderBanner } =
-  NewspaperSectionFormType;
-
-const SectionTypes = [
-  FullArticleSection,
-  NewsSummarySection,
-  TopNewsCard,
-  HeaderBanner,
-];
+import { NewspaperSectionType } from "../../../../../../../api/newspaper/newspaper.type";
 
 export const newspaperSectionFormSchema = yup.object({
   type: yup
-    .string()
-    .oneOf(SectionTypes, t("validation.invalidSectionType"))
-    .required(t("validation.requiredSectionType")),
+    .mixed<NewspaperSectionType>()
+    .oneOf(
+      Object.values(NewspaperSectionType) as NewspaperSectionType[],
+      t("validation.invalidSectionType")
+    )
+    .required(t("validation.requiredSectionType"))
+    .default(NewspaperSectionType.FullArticleSection),
   title: yup
     .array()
     .of(yup.string().required(t("validation.requiredTitle")))

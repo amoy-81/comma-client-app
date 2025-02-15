@@ -1,21 +1,21 @@
 import { t } from "i18next";
-import { NewspaperSectionFormType } from "../@types/newspaper-section-form.type";
+import { NewspaperSectionType } from "../../../../../../../api/newspaper/newspaper.type";
 
 export const SectionTypes = [
   {
     label: t("TopNewsCard") || "Top News Card",
-    value: NewspaperSectionFormType.TopNewsCard,
+    value: NewspaperSectionType.TopNewsCard,
   },
   {
     label: t("NewsSummarySection") || "NewsSummarySection",
-    value: NewspaperSectionFormType.NewsSummarySection,
+    value: NewspaperSectionType.NewsSummarySection,
   },
   {
     label: t("FullArticleSection") || "FullArticleSection",
-    value: NewspaperSectionFormType.FullArticleSection,
+    value: NewspaperSectionType.FullArticleSection,
   },
   {
     label: t("HeaderBanner") || "HeaderBanner",
-    value: NewspaperSectionFormType.HeaderBanner,
+    value: NewspaperSectionType.HeaderBanner,
   },
 ];

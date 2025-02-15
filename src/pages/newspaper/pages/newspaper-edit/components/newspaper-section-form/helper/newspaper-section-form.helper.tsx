@@ -1,24 +1,22 @@
-import {
-  NewspaperSectionFormType,
-  SectionFileProps,
-} from "../@types/newspaper-section-form.type";
+import { NewspaperSectionType } from "../../../../../../../api/newspaper/newspaper.type";
+import { SectionFileProps } from "../@types/newspaper-section-form.type";
 import FullArticleSection from "../sections/FullArticleSection";
 import HeaderBannerSection from "../sections/HeaderBannerSection";
 import NewsSummarySection from "../sections/NewsSummarySection";
 import TopNewsCardSection from "../sections/TopNewsCardSection";
 
 export const renderNewspaperSectionForm = (
-  type: NewspaperSectionFormType,
+  type: NewspaperSectionType,
   props?: SectionFileProps
 ) => {
   switch (type) {
-    case NewspaperSectionFormType.FullArticleSection:
+    case NewspaperSectionType.FullArticleSection:
       return <FullArticleSection />;
-    case NewspaperSectionFormType.HeaderBanner:
+    case NewspaperSectionType.HeaderBanner:
       return <HeaderBannerSection {...(props as SectionFileProps)} />;
-    case NewspaperSectionFormType.NewsSummarySection:
+    case NewspaperSectionType.NewsSummarySection:
       return <NewsSummarySection />;
-    case NewspaperSectionFormType.TopNewsCard:
+    case NewspaperSectionType.TopNewsCard:
       return <TopNewsCardSection {...(props as SectionFileProps)} />;
     default:
       return <FullArticleSection />;
