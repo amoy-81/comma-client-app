@@ -78,8 +78,8 @@ const NewspaperEditPage = () => {
 
   return (
     <>
-      <Box className="flex w-full justify-between items-center">
-        <Box className="flex items-center gap-2">
+      <Box className="flex w-full justify-between max-md:flex-col gap-2">
+        <Box className="flex gap-2">
           <Button
             variant="contained"
             size="small"

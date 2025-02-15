@@ -33,7 +33,7 @@ const NewspaperSectionRow: FC<NewspaperSectionRowProps> = ({
   }, 500);
 
   return (
-    <Box className="bg-secondary-600 p-2 rounded-md flex justify-between items-center">
+    <Box className="bg-secondary-600 p-2 rounded-md flex max-md:flex-col justify-between md:items-center">
       <Typography className='flex gap-1'>
         {type} -{" "}
         <Box className="text-secondary-500">
@@ -41,7 +41,7 @@ const NewspaperSectionRow: FC<NewspaperSectionRowProps> = ({
         </Box>
       </Typography>
 
-      <Box className="flex items-center gap-2">
+      <Box className="flex items-center max-md:w-full max-md:justify-end gap-2">
         <Box className="flex items-center gap-2">
           <Typography className="!text-sm font-semibold">
             {t("priority")}

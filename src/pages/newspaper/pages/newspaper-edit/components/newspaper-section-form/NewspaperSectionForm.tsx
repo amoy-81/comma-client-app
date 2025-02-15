@@ -163,7 +163,7 @@ const NewspaperSectionForm: FC<NewspaperSectionFormProps> = ({
           )}
         </Box>
 
-        <Box className="flex items-center gap-2 w-full justify-center">
+        <Box className="flex items-center gap-2 w-full justify-center sticky -bottom-3 left-0 p-2 bg-secondary-600">
           <Button onClick={() => handleClose()}>{t("cancel")}</Button>
           <Button variant="contained" onClick={handleSubmitSection}>
             {t("submit")}
