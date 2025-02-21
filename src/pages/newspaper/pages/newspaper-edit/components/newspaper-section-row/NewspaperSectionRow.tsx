@@ -1,9 +1,12 @@
 import { FC, useEffect, useState } from "react";
 import { NewspaperSectionRowProps } from "./@types/newspaper-section-row.type";
 import { Box, CircularProgress, Input, Typography } from "@mui/material";
-import { Edit } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 import _ from "lodash";
-import { useNewsPaperEditSection } from "../../../../../../api/newspaper/newspaper.querys";
+import {
+  useNewsPaperDeleteSection,
+  useNewsPaperEditSection,
+} from "../../../../../../api/newspaper/newspaper.querys";
 import { t } from "i18next";
 
 const NewspaperSectionRow: FC<NewspaperSectionRowProps> = ({
@@ -19,6 +22,9 @@ const NewspaperSectionRow: FC<NewspaperSectionRowProps> = ({
   const { NewsPaperEditSectionMutate, NewsPaperEditSectionIsPending } =
     useNewsPaperEditSection();
 
+  const { NewsPaperDeleteSectionMutate, NewsPaperDeleteSectionIsPending } =
+    useNewsPaperDeleteSection();
+
   useEffect(() => {
     if (orderValue && orderValue !== order) {
       NewsPaperEditSectionMutate(
@@ -28,13 +34,19 @@ const NewspaperSectionRow: FC<NewspaperSectionRowProps> = ({
     }
   }, [orderValue]);
 
+  const handleDeleteSection = () => {
+    NewsPaperDeleteSectionMutate(id, {
+      onSuccess: () => refetchSections(),
+    });
+  };
+
   const handleChangeOrder = _.debounce((newValue: number) => {
     setOrderValue(newValue);
   }, 500);
 
   return (
     <Box className="bg-secondary-600 p-2 rounded-md flex max-md:flex-col justify-between md:items-center">
-      <Typography className='flex gap-1'>
+      <Typography className="flex gap-1">
         {type} -{" "}
         <Box className="text-secondary-500">
           {title[0] ? `${title[0].substring(0, 6)}...` : ""}
@@ -59,6 +71,16 @@ const NewspaperSectionRow: FC<NewspaperSectionRowProps> = ({
             <CircularProgress className="!size-6" />
           ) : (
             <Edit />
+          )}
+        </Box>
+        <Box
+          className="cursor-pointer flex items-center"
+          onClick={handleDeleteSection}
+        >
+          {NewsPaperDeleteSectionIsPending ? (
+            <CircularProgress className="!size-6" />
+          ) : (
+            <Delete />
           )}
         </Box>
       </Box>
