@@ -24,6 +24,65 @@ const theme = createTheme({
             fontSize: "14px",
             color: "#fff",
           },
+          borderColor: "#fff",
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#fff",
+          },
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#fff",
+          },
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#fff",
+          },
+        },
+        input: {
+          color: "#fff",
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          color: "#fff",
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#fff",
+          },
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#fff",
+          },
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#fff",
+          },
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#0E1828",
+          color: "#fff",
+          "&:hover": {
+            backgroundColor: "#15233A",
+          },
+          "&.Mui-selected": {
+            backgroundColor: "#15233A",
+            "&:hover": {
+              backgroundColor: "#15233A",
+            },
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: "#fff",
         },
       },
     },

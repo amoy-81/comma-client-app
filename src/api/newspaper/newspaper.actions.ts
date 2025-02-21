@@ -59,7 +59,9 @@ const useNewspaperAction = () => {
     data: NewsPaperAddSectionRequest
   ): Promise<NewsPaperAddSectionResponse> => {
     const response = await axiosInstance
-      .post(NewspaperUrls.Section, data)
+      .post(NewspaperUrls.Section, data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
       .then((res) => res.data)
       .catch((err) => err);
 
@@ -72,7 +74,9 @@ const useNewspaperAction = () => {
     const { sectionId, ...sectionEditedData } = data;
 
     const response = await axiosInstance
-      .put(`${NewspaperUrls.Section}/${sectionId}`, sectionEditedData)
+      .put(`${NewspaperUrls.Section}/${sectionId}`, sectionEditedData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
       .then((res) => res.data)
       .catch((err) => err);
 

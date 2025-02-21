@@ -10,6 +10,8 @@ import BoardPage from "../pages/board/BoardPage";
 import NewspaperPage from "../pages/newspaper/NewspaperPage";
 import PostPage from "../pages/post/PostPage";
 import NotifPage from "../pages/notif/NotifPage";
+import NewspaperEditPage from "../pages/newspaper/pages/newspaper-edit/NewspaperEditPage";
+import NewspaperViewPage from "../pages/newspaper/pages/newspaper-view/NewspaperViewPage";
 
 const router = createBrowserRouter([
   {
@@ -25,10 +27,12 @@ const router = createBrowserRouter([
       { path: "search", element: <SearchPage /> },
       { path: "board", element: <BoardPage /> },
       { path: "newspaper", element: <NewspaperPage /> },
+      { path: "newspaper/edit", element: <NewspaperEditPage /> },
       { path: "post", element: <PostPage /> },
       { path: "notif", element: <NotifPage /> },
     ],
   },
+  { path: "newspaper/view", element: <NewspaperViewPage /> },
   {
     path: "/auth",
     element: (

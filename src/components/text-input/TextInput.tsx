@@ -18,6 +18,7 @@ const TextInput: FC<TextInputProps> = ({
       rules={rules}
       render={({ field, fieldState: { error } }) => (
         <TextField
+          variant="standard"
           {...props}
           {...field}
           label={label}
@@ -25,10 +26,10 @@ const TextInput: FC<TextInputProps> = ({
           error={!!error}
           helperText={error ? error.message : ""}
           fullWidth
-          variant="standard"
           margin="normal"
+          InputLabelProps={{ shrink: true }}
           sx={{
-            borderColor: "#fff"
+            borderColor: "#fff",
           }}
         />
       )}

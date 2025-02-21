@@ -9,7 +9,7 @@ const MainSection = () => {
     <Box className="md:bg-secondary-900 md:border border-solid border-secondary-800 xl:col-span-6 md:col-span-8 col-span-12 rounded-3xl">
       <DesktopHeader />
       <MobileHeader />
-      <Box className="py-4 md:px-4 px-2">
+      <Box className="py-4 md:px-4 px-2 max-md:mt-4 ">
         <Outlet />
       </Box>
       <Box className="h-10" />
