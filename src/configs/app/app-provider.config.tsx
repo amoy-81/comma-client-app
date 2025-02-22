@@ -22,7 +22,7 @@ const ltrCache = createCache({
 });
 
 const AppProvider: FC<AppProviderProps> = ({ children }) => {
-  const { lang } = useLanguageStore();
+  const { lang, theme: appTheme } = useLanguageStore();
   const { i18n } = useTranslation();
 
   const queryClient = new QueryClient();
@@ -32,7 +32,7 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
   const muiTheme = useMemo(
     () =>
       createTheme({
-        ...theme,
+        ...theme(appTheme),
         typography: {
           fontFamily: fonts[lang],
         },
@@ -45,6 +45,14 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
     i18n.changeLanguage(lang);
     document.documentElement.dir = direction;
   }, [lang, i18n, direction]);
+
+  useEffect(() => {
+    if (appTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [appTheme]);
 
   return (
     <CacheProvider value={lang === "fa" ? rtlCache : ltrCache}>
