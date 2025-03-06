@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Avatar, Box, Button, Skeleton, Typography } from "@mui/material";
 import { UserRoles } from "../../../api/user/user.type";
 import InfoSkeleton from "../components/skeleton/InfoSkeleton";
@@ -9,12 +10,18 @@ import { t } from "i18next";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { formatDate } from "../../../utils/format-date.util";
 import { useCommunity } from "../../../hooks/use-community.hook";
+import Modal from "../../../components/modal/Modal";
+import UserRow from "../../../components/user-row/UserRow";
 
 const InformationSection = () => {
   const { followings, followUser, unfollowUser, isPending } = useCommunity();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<"followers" | "following">(
+    "followers"
+  );
 
   const userId = searchParams.get("user");
   const id = parseInt(userId || "");
@@ -22,21 +29,40 @@ const InformationSection = () => {
   const { getUserData, getUserLoading } = useGetUser(
     id || (user?.id as number)
   );
-  
 
   const { avatar, name, email, bio, role, created_at } =
     getUserData?.user || {};
 
-    const { postCount, followerCount, followingCount } =
+  const { postCount, followerCount, followingCount } =
     getUserData?.status || {};
+
+  const { followers, following } = getUserData?.related || {
+    followers: [],
+    following: [],
+  };
 
   const userInfoDetails = [
     { count: postCount, label: t("posts") },
-    { count: followerCount, label: t("followers") },
-    { count: followingCount, label: t("followed") },
+    {
+      count: followerCount,
+      label: t("followers"),
+      onClick: () => handleModalOpen("followers"),
+    },
+    {
+      count: followingCount,
+      label: t("followed"),
+      onClick: () => handleModalOpen("following"),
+    },
   ];
 
-  
+  const handleModalOpen = (type: "followers" | "following") => {
+    setModalType(type);
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
 
   const handleFollow = () => {
     followUser(id);
@@ -46,8 +72,8 @@ const InformationSection = () => {
     unfollowUser(id);
   };
 
-  const handleNavigateProfile = () => {
-    navigate("/profile");
+  const handleEditProfile = () => {
+    navigate("/edit-profile");
   };
 
   return (
@@ -96,13 +122,13 @@ const InformationSection = () => {
             )
           ) : (
             <Button
-              onClick={handleNavigateProfile}
+              onClick={handleEditProfile}
               disabled={isPending}
               variant="text"
               className="!h-8 !w-20 !text-xs "
               size="small"
             >
-              {t("profile")}
+              {t("Edit Profile")}
             </Button>
           )}
         </Box>
@@ -127,9 +153,13 @@ const InformationSection = () => {
           </Box>
         )}
 
-        <Box className="flex items-center gap-4 w-full justify-center mt-6">
+        <Box className="flex items-center gap-2 w-full justify-center mt-4">
           {userInfoDetails.map((item, index) => (
-            <Box key={index} className="flex flex-col items-center">
+            <Box
+              key={index}
+              className="flex flex-col items-center"
+              onClick={item.onClick}
+            >
               {getUserLoading ? (
                 <>
                   <Skeleton variant="text" className="!w-5 !bg-secondary-600" />
@@ -167,6 +197,31 @@ const InformationSection = () => {
 
         <Box component={"hr"} className="border-white/25 mt-4 !mx-4" />
       </Box>
+
+      <Modal
+        open={modalOpen}
+        onClose={handleModalClose}
+        className="!max-w-md !w-full"
+      >
+        <Box className="w-full">
+          <Typography variant="h6" className="!text-white !mb-4">
+            {modalType === "followers" ? t("Followers") : t("Following")}
+          </Typography>
+          <Box className="space-y-2">
+            {(modalType === "followers" ? followers : following)?.map(
+              (user) => (
+                <UserRow
+                  key={user.id}
+                  id={user.id}
+                  name={user.name}
+                  avatar={user.avatar}
+                  role={user.role}
+                />
+              )
+            )}
+          </Box>
+        </Box>
+      </Modal>
     </>
   );
 };

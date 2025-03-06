@@ -12,6 +12,7 @@ import PostPage from "../pages/post/PostPage";
 import NotifPage from "../pages/notif/NotifPage";
 import NewspaperEditPage from "../pages/newspaper/pages/newspaper-edit/NewspaperEditPage";
 import NewspaperViewPage from "../pages/newspaper/pages/newspaper-view/NewspaperViewPage";
+import EditProfile from "../../src/pages/profile/sections/EditProfile"; // ایمپورت کامپوننت EditProfile
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <HomePage /> },
       { path: "profile", element: <ProfilePage /> },
+      { path: "edit-profile", element: <EditProfile /> }, // اضافه کردن مسیر EditProfile
       { path: "search", element: <SearchPage /> },
       { path: "board", element: <BoardPage /> },
       { path: "newspaper", element: <NewspaperPage /> },
