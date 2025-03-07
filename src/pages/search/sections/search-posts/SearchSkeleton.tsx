@@ -5,7 +5,7 @@ export const TopPostSkeleton = () => {
     <Box className="top-post-skeleton rounded-xl p-6 shadow-lg relative overflow-hidden col-span-1 row-span-2">
       <Skeleton
         variant="rectangular"
-        className="absolute inset-0 opacity-25 rounded-xl !h-full !w-full"
+        className="absolute inset-0 opacity-25 rounded-xl !h-full !w-full !bg-secondary-600"
       />
       <Box className="relative flex flex-col items-center text-center h-full justify-center">
         <Skeleton
@@ -38,7 +38,7 @@ export const PostCardSkeleton = () => {
     <Box className="post-card-skeleton bg-secondary-900 rounded-xl p-4 shadow-lg relative overflow-hidden w-full md:w-80/2 h-36 cursor-pointer">
       <Skeleton
         variant="rectangular"
-        className="absolute inset-0 opacity-20 rounded-xl !h-full !w-full"
+        className="absolute inset-0 opacity-20 rounded-xl !h-full !w-full !bg-secondary-600"
       />
 
       <Box className="hidden md:flex items-start space-x-4 h-full">
