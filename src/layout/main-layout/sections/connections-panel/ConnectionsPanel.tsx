@@ -9,7 +9,7 @@ const ConnectionsPanel = () => {
   return (
     <Box className="xl:col-span-3 col-span-4 hidden md:flex flex-col gap-4">
       {/* Logo */}
-      <Box className="sticky top-4 w-full h-10 p-2 pl-3 bg-secondary-900 border border-solid border-secondary-800 rounded-3xl flex items-center gap-1">
+      <Box className="sticky top-4 z-40 w-full h-10 p-2 pl-3 bg-secondary-900 border border-solid border-secondary-800 rounded-3xl flex items-center gap-1">
         <img src={Logo} className="size-6" />
         <Typography className="!font-extrabold !text-sm text-primary-600">
           {t("comma")}
