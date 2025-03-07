@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useUpdateProfile } from "../../../../api/user/user.querys";
@@ -9,19 +9,10 @@ import { UpdateProfileRequest } from "../../../../api/user/user.type";
 const EditProfile = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const {
-    updateProfileMutate,
-    updateProfileIsPending,
-    updateProfileIsSuccess,
-    updateProfileData,
-  } = useUpdateProfile();
+  const { updateProfileMutate, updateProfileIsPending } = useUpdateProfile();
   const [name, setName] = useState(user?.name || "");
   const [bio, setBio] = useState(user?.bio || "");
   const [avatar, setAvatar] = useState<File | null>(null);
-
-  useEffect(() => {
-    console.log("User data:", user);
-  }, [user]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,22 +28,8 @@ const EditProfile = () => {
     ) as unknown as UpdateProfileRequest;
 
     updateProfileMutate(payload, {
-      onSuccess: (data) => {
-        console.log("Profile updated successfully!", data);
-        if (user) {
-          const updatedUser = {
-            ...user,
-            name,
-            bio,
-            avatar: avatar ? URL.createObjectURL(avatar) : user.avatar,
-          };
-          localStorage.setItem("user", JSON.stringify(updatedUser));
-          window.location.reload();
-        }
+      onSuccess: () => {
         navigate("/profile");
-      },
-      onError: (error) => {
-        console.error("Error updating profile:", error);
       },
     });
   };
@@ -97,17 +74,6 @@ const EditProfile = () => {
           </Button>
         </Box>
       </form>
-
-      {updateProfileIsSuccess && (
-        <Typography className="!mt-4 !text-green-500">
-          {t("Profile updated successfully!")}
-        </Typography>
-      )}
-      {updateProfileData && (
-        <Typography className="!mt-4 !text-white">
-          {t("Updated data:")} {JSON.stringify(updateProfileData)}
-        </Typography>
-      )}
     </Box>
   );
 };
