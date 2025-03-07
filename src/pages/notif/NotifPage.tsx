@@ -35,7 +35,6 @@ const NotifPage: React.FC = () => {
     </Box>
   );
 };
-
 const NotificationItem: React.FC<{ notif: Notif }> = ({ notif }) => {
   const sender = notif.sender || {};
 
@@ -76,7 +75,7 @@ const NotificationItem: React.FC<{ notif: Notif }> = ({ notif }) => {
         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.5)",
       }}
     >
-      <Box className="col-span-1">
+      <Box className="col-span-2 md:col-span-1">
         <Avatar
           src={sender.avatar || ""}
           alt={sender.name || "User"}
@@ -84,7 +83,7 @@ const NotificationItem: React.FC<{ notif: Notif }> = ({ notif }) => {
         />
       </Box>
 
-      <Box className="col-span-9 ml-4">
+      <Box className="col-span-8 md:col-span-9 ml-4">
         <Box>
           <p className="font-semibold text-white">
             {sender.name || "Unknown User"}

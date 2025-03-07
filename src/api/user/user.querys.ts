@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useUserAction from "./user.actions";
 import { UserKeys } from "./user.keys";
 import { SearchUserParams, UpdateProfileRequest } from "./user.type";
@@ -6,14 +6,14 @@ import { SearchUserParams, UpdateProfileRequest } from "./user.type";
 export const useGetUser = (userId: number) => {
   const { getUserById } = useUserAction();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isPending, isRefetching } = useQuery({
     queryKey: [UserKeys.getUserById, userId],
     queryFn: () => getUserById(userId),
   });
 
   return {
     getUserData: data,
-    getUserLoading: isLoading,
+    getUserLoading: isLoading || isPending || isRefetching,
   };
 };
 
@@ -67,10 +67,14 @@ export const useSearchUser = () => {
 
 export const useUpdateProfile = () => {
   const { updateUserInfo } = useUserAction();
+  const queryClient = useQueryClient();
 
   const { mutate, isPending, isSuccess, data } = useMutation({
     mutationKey: [UserKeys.updateProfile],
     mutationFn: (params: UpdateProfileRequest) => updateUserInfo(params),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [UserKeys.getUserById] });
+    },
   });
 
   return {
