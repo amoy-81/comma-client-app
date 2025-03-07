@@ -12,6 +12,7 @@ import { formatDate } from "../../../utils/format-date.util";
 import { useCommunity } from "../../../hooks/use-community.hook";
 import Modal from "../../../components/modal/Modal";
 import UserRow from "../../../components/user-row/UserRow";
+import { mergeClasses } from "../../../utils/merge-classess.util";
 
 const InformationSection = () => {
   const { followings, followUser, unfollowUser, isPending } = useCommunity();
@@ -73,13 +74,13 @@ const InformationSection = () => {
   };
 
   const handleEditProfile = () => {
-    navigate("/edit-profile");
+    navigate("/profile/edit");
   };
 
   return (
     <>
       <Box className="relative flex w-full justify-center">
-        <img src={ProfileBanner} className="w-full" />
+        <img src={ProfileBanner} className="w-full h-40" height={160} />
         <Box className="absolute -bottom-14">
           {getUserLoading ? (
             <Box className="size-28 bg-secondary-900 rounded-full">
@@ -125,8 +126,7 @@ const InformationSection = () => {
               onClick={handleEditProfile}
               disabled={isPending}
               variant="text"
-              className="!h-8 !w-20 !text-xs "
-              size="small"
+              className="!text-xs "
             >
               {t("Edit Profile")}
             </Button>
@@ -157,7 +157,10 @@ const InformationSection = () => {
           {userInfoDetails.map((item, index) => (
             <Box
               key={index}
-              className="flex flex-col items-center"
+              className={mergeClasses(
+                "flex flex-col items-center",
+                !!item.onClick && "cursor-pointer"
+              )}
               onClick={item.onClick}
             >
               {getUserLoading ? (

@@ -19,7 +19,7 @@ const Modal: FC<ModalProps> = ({ open, onClose, children, className }) => {
     <MUIModal
       open={open}
       onClose={onClose}
-      className="flex justify-center items-end sm:items-center"
+      className="flex justify-center items-end sm:items-center !outline-none"
     >
       <motion.div
         initial={{ opacity: 0, y: isMobile ? "100%" : -50 }}

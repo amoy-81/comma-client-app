@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useUpdateProfile } from "../../../api/user/user.querys";
+import { useUpdateProfile } from "../../../../api/user/user.querys";
 import { t } from "i18next";
-import useAuth from "../../../hooks/use-auth.hook";
-import { UpdateProfileRequest } from "../../../api/user/user.type";
+import useAuth from "../../../../hooks/use-auth.hook";
+import { UpdateProfileRequest } from "../../../../api/user/user.type";
 
 const EditProfile = () => {
   const navigate = useNavigate();
