@@ -48,6 +48,14 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/auth",
+    element: (
+      <AuthProvider mode="auth">
+        <AuthLayout />
+      </AuthProvider>
+    ),
+  },
+  {
     path: "*",
     element: <Navigate to={"/"} />,
   },
