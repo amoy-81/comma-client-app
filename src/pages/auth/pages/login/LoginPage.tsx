@@ -10,7 +10,7 @@ import { AppConfig } from "../../../../configs/app/app.config";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { user, login, loginPending } = useAuth();
+  const { user, login } = useAuth();
 
   const methods = useForm<LoginRequest>();
 
