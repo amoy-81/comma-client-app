@@ -13,6 +13,7 @@ import NotifPage from "../pages/notif/NotifPage";
 import NewspaperEditPage from "../pages/newspaper/pages/newspaper-edit/NewspaperEditPage";
 import NewspaperViewPage from "../pages/newspaper/pages/newspaper-view/NewspaperViewPage";
 import EditProfile from "../pages/profile/pages/edit-profile/EditProfile";
+import VerifyPage from "../pages/auth/pages/verify/VerifyPage";
 
 const router = createBrowserRouter([
   {
@@ -48,12 +49,8 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/auth",
-    element: (
-      <AuthProvider mode="auth">
-        <AuthLayout />
-      </AuthProvider>
-    ),
+    path: "/auth/login/verify",
+    element: <VerifyPage />,
   },
   {
     path: "*",

@@ -2,7 +2,9 @@ import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useNavigate, useLocation } from "react-router-dom";
 import useAuthStore from "../../../../store/auth/auth.store";
-import axiosInstance from "../../../../services/http.service";
+import Lottie from "lottie-react";
+import loadingAnimation from "../../../../assets/animations/google-login.json";
+import { Box } from "@mui/material";
 
 const VerifyPage = () => {
   const navigate = useNavigate();
@@ -10,7 +12,6 @@ const VerifyPage = () => {
   const { setUser } = useAuthStore();
 
   useEffect(() => {
-    console.log("VerifyPage", location.search);
     const params = new URLSearchParams(location.search);
     const accessToken = params.get("accessToken");
     const refreshToken = params.get("refreshToken");
@@ -19,34 +20,21 @@ const VerifyPage = () => {
       Cookies.set("accessToken", accessToken, { secure: true });
       Cookies.set("refreshToken", refreshToken, { secure: true, expires: 7 });
 
-      const fetchUser = async () => {
-        try {
-          const response = await axiosInstance.get("/auth/whoiam", {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
-
-          const user = response.data;
-
-          if (user) {
-            setUser(user);
-            navigate("/");
-          } else {
-            navigate("/auth/login");
-          }
-        } catch (err) {
-          navigate("/auth/login");
-        }
-      };
-
-      fetchUser();
+      navigate("/home");
     } else {
       navigate("/auth/login");
     }
   }, [navigate, location, setUser]);
 
-  return <div>Please wait...</div>;
+  return (
+    <Box className="flex justify-center items-center w-full h-screen">
+      <Lottie
+        animationData={loadingAnimation}
+        loop
+        style={{ width: 300, height: 300 }}
+      />
+    </Box>
+  );
 };
 
 export default VerifyPage;
