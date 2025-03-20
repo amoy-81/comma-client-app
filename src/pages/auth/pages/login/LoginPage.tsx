@@ -1,12 +1,12 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import useAuth from "../../../../hooks/use-auth.hook";
-import TextInput from "../../../../components/text-input/TextInput";
 import { FormProvider, useForm } from "react-hook-form";
 import { LoginRequest } from "../../../../api/auth/auth.type";
 import GoogleLogo from "../../../../assets/svg/google-logo.svg";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { t } from "i18next";
+import { AppConfig } from "../../../../configs/app/app.config";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -22,6 +22,10 @@ const LoginPage = () => {
 
   const handleLogin = (data: LoginRequest) => {
     login(data);
+  };
+
+  const handleLoginWithGoogle = () => {
+    window.location.href = `${AppConfig.baseURL}/auth/google`;
   };
 
   return (
@@ -43,7 +47,7 @@ const LoginPage = () => {
           {/* Form Section */}
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(handleLogin)}>
-              <TextInput
+              {/* <TextInput
                 fullWidth
                 name="email"
                 label={t("email")}
@@ -76,10 +80,10 @@ const LoginPage = () => {
                 <Typography className="w-full text-right text-primary-600 !text-sm">
                   {t("Forgot password?")}
                 </Typography>
-              </Box>
+              </Box> */}
 
               {/* Action Button */}
-              <Button
+              {/* <Button
                 fullWidth
                 type="submit"
                 variant="contained"
@@ -87,10 +91,11 @@ const LoginPage = () => {
                 disabled={loginPending}
               >
                 {loginPending ? t("Sending...") : t("login")}
-              </Button>
+              </Button> */}
               <Button
                 fullWidth
                 className="!bg-white !text-black !mt-2 flex gap-2"
+                onClick={handleLoginWithGoogle}
               >
                 <img src={GoogleLogo} alt="google logo" />
                 {t("LOGIN With Google")}
@@ -99,21 +104,21 @@ const LoginPage = () => {
           </FormProvider>
         </Box>
 
-        <Box className="flex items-center">
+        {/* <Box className="flex items-center">
           <Box className="flex-1 bg-primary-600/40 h-px" />
           <Typography className="px-2">{t("OR")}</Typography>
           <Box className="flex-1 bg-primary-600/40 h-px" />
-        </Box>
+        </Box> */}
 
         {/* Link Section */}
-        <Typography className="!mt-2 !font-medium text-center">
+        {/* <Typography className="!mt-2 !font-medium text-center">
           {t("Dont have an accont?")}
-        </Typography>
-        <Box className="sm:px-12 px-4 py-4 pb-6">
+        </Typography> */}
+        {/* <Box className="sm:px-12 px-4 py-4 pb-6">
           <Button fullWidth className="" variant="outlined" color="inherit">
             {t("Sign up")}
           </Button>
-        </Box>
+        </Box> */}
       </Container>
     </Box>
   );
