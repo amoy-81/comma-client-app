@@ -10,6 +10,7 @@ const VerifyPage = () => {
   const { setUser } = useAuthStore();
 
   useEffect(() => {
+    console.log("VerifyPage", location.search);
     const params = new URLSearchParams(location.search);
     const accessToken = params.get("accessToken");
     const refreshToken = params.get("refreshToken");
